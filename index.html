@@ -1,349 +1,761 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Commerce Home</title>
-    <style>
-        /* Base Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>E-Commerce Home</title>
+        <style>
+            /* Base Reset */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                scroll-behavior: smooth;
+            }
 
-        body {
-            background-color: #f8f9fa;
-            overflow-x: hidden; /* Prevents horizontal scrolling */
-        }
+            body {
+                background-color: #f8f9fa;
+                overflow-x: hidden;
+            }
 
-        /* Top Navigation Bar */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #ffffff; /* Pure white background like image */
-            padding: 15px 50px; 
-            color: #333333;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: relative;
-            z-index: 1100;
-        }
+            /* Top Navigaation Bar */
+            .navbar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background-color: #ffffff;
+                padding: 15px 50px; 
+                color: #333333;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+                position: sticky;
+                top: 0;
+                z-index: 1100;
+                animation: slideDownNav 0.6s ease-out forwards; /* Navbar Load Animation */
+            }
 
-        /* Left Side: Company Logo & Name */
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px; /* Space between logo and text */
-            cursor: pointer;
-        }
+            @keyframes slideDownNav {
+                from { transform: translateY(-100%); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
 
-        .logo img {
-            height: 45px; /* Adjust based on your image */
-            width: 45px;
-            object-fit: contain; 
-            border-radius: 50%; /* Makes image circular */
-        }
+            .logo {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                cursor: pointer;
+            }
 
-        .brand-name {
-            color: #d45d79; /* Pink color */
-            font-size: 28px;
-            font-weight: bold;
-            font-family: 'Georgia', serif; /* Serif font matching the image */
-            letter-spacing: 0.5px;
-        }
+            .logo img {
+                height: 45px; 
+                width: 45px;
+                object-fit: contain; 
+                border-radius: 50%;
+                transition: transform 0.4s ease; /* Logo Animation */
+            }
 
-        /* Right Side: Navigation Links */
-        .nav-links {
-            list-style: none;
-            display: flex;
-            align-items: center;
-            margin: 0;
-            padding: 0;
-        }
+            .logo:hover img {
+                transform: scale(1.1) rotate(5deg);
+            }
 
-        .nav-links > li {
-            position: relative;
-            margin-left: 25px;
-        }
+            .brand-name {
+                color: #d45d79;
+                font-size: 28px;
+                font-weight: bold;
+                font-family: 'Georgia', serif;
+                letter-spacing: 0.5px;
+            }
 
-        .nav-links a {
-            color: #333333; /* Dark text for off-white nav */
-            text-decoration: none;
-            font-size: 16px;
-            display: block;
-            padding: 10px;
-            transition: color 0.3s ease;
-        }
+            /* Checkbox hack for Mobile Menu (No JS) */
+            #nav-check {
+                display: none;
+            }
 
-        .nav-links > li > a:hover {
-            color: #d45d79; /* Pink hover effect */
-        }
+            .hamburger {
+                display: none;
+                cursor: pointer;
+                flex-direction: column;
+                gap: 5px;
+            }
 
-        /* First Level Dropdown Menus */
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: #ffffff;
-            min-width: 220px;
-            list-style: none;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
-            border-radius: 0 0 5px 5px;
-            z-index: 1000;
-        }
+            .hamburger span {
+                display: block;
+                width: 25px;
+                height: 3px;
+                background-color: #333333;
+                border-radius: 3px;
+                transition: all 0.3s ease;
+            }
 
-        .dropdown-menu li {
-            position: relative;
-            border-bottom: 1px solid #eee;
-        }
+            /* Right Side: Navigation Links */
+            .nav-links {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                margin: 0;
+                padding: 0;
+            }
 
-        .dropdown-menu li:last-child {
-            border-bottom: none;
-        }
+            .nav-links > li {
+                position: relative;
+                margin-left: 25px;
+            }
 
-        .dropdown-menu a {
-            color: #333333;
-            padding: 12px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+            .nav-links a {
+                color: #333333;
+                text-decoration: none;
+                font-size: 16px;
+                display: block;
+                padding: 10px;
+                transition: all 0.3s ease; /* Updated transition for all properties */
+                position: relative;
+            }
 
-        .dropdown-menu a:hover {
-            background-color: #fff0f3; /* Light pink background tint on hover */
-            color: #d45d79; /* Pink text on hover */
-        }
+            /* Link Underline Animation */
+            .nav-links > li > a::after {
+                content: '';
+                position: absolute;
+                bottom: 2px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0;
+                height: 2px;
+                background-color: #d45d79;
+                transition: width 0.3s ease;
+            }
 
-        /* Second Level Sub-Dropdowns (Opening on the right side) */
-        .sub-dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 100%; /* Pushes the menu to the exact right of the parent */
-            background-color: #ffffff;
-            min-width: 200px;
-            list-style: none;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
-            border-radius: 0 5px 5px 5px;
-        }
+            .nav-links > li > a:hover {
+                color: #d45d79;
+            }
 
-        /* Hover Logic to reveal menus */
-        .nav-links li:hover > .dropdown-menu {
-            display: block;
-        }
+            .nav-links > li > a:hover::after {
+                width: 70%;
+            }
 
-        .dropdown-menu li:hover > .sub-dropdown-menu {
-            display: block;
-        }
+            /* First Level Dropdown Menus */
+            .dropdown-menu {
+                visibility: hidden; /* Replaced display:none for smooth animation */
+                opacity: 0;
+                transform: translateY(15px); /* Slide down effect */
+                transition: all 0.3s ease;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background-color: #ffffff;
+                min-width: 220px;
+                list-style: none;
+                box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+                border-radius: 0 0 5px 5px;
+                z-index: 1000;
+            }
 
-        /* Cart Icon SVG & Badge Styling */
-        .cart-icon {
-            display: flex;
-            align-items: center;
-            position: relative; /* Badge positioning ke liye */
-        }
-        
-        .cart-icon svg {
-            width: 24px;
-            height: 24px;
-            stroke: #555555; /* Dark grey stroke */
-            fill: none;
-            transition: stroke 0.3s ease;
-        }
+            .dropdown-menu li {
+                position: relative;
+                border-bottom: 1px solid #eee;
+            }
 
-        .nav-links li:hover .cart-icon svg {
-            stroke: #d45d79;
-        }
+            .dropdown-menu li:last-child { border-bottom: none; }
 
-        .cart-badge {
-            position: absolute;
-            top: -8px;
-            right: -12px;
-            background-color: #d45d79;
-            color: #ffffff;
-            font-size: 11px;
-            font-weight: bold;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+            .dropdown-menu a {
+                color: #333333;
+                padding: 12px 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
 
-        .arrow {
-            font-size: 12px;
-            color: #888;
-        }
+            .dropdown-menu a:hover {
+                background-color: #fff0f3;
+                color: #d45d79;
+                padding-left: 25px; /* Slide text right slightly on hover */
+            }
 
-        /* Homepage Main Content Background */
-        .hero-section {
-            text-align: center;
-            padding: 120px 20px;
+            /* Second Level Sub-Dropdowns */
+            .sub-dropdown-menu {
+                visibility: hidden;
+                opacity: 0;
+                transform: translateX(15px); /* Slide left effect */
+                transition: all 0.3s ease;
+                position: absolute;
+                top: 0;
+                left: 100%;
+                background-color: #ffffff;
+                min-width: 200px;
+                list-style: none;
+                box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+                border-radius: 0 5px 5px 5px;
+            }
+
+            /* Hover Triggers */
+            .nav-links li:hover > .dropdown-menu { 
+                visibility: visible;
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .dropdown-menu li:hover > .sub-dropdown-menu { 
+                visibility: visible;
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            /* Cart Icon */
+            .cart-icon {
+                display: flex;
+                align-items: center;
+                position: relative;
+                transition: transform 0.3s ease; /* Bounce animation */
+            }
             
-            /* REPLACE 'BACKGROUND_FILE_ID_HERE' WITH YOUR GOOGLE DRIVE IMAGE ID */
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('hero.jpeg');        
-            background-size: cover; /* Auto-adjusts image to fit screen */
-            background-position: center; 
-            background-repeat: no-repeat;
-            min-height: calc(100vh - 75px); /* Full screen height minus navbar */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
+            .cart-icon:hover {
+                transform: translateY(-3px); 
+            }
 
-        .hero-section h1 {
-            color: #fdfdfd; /* Off-white text */
-            font-size: 56px;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.6); /* Shadow for readability */
-        }
+            .cart-icon svg {
+                width: 24px;
+                height: 24px;
+                stroke: #555555;
+                fill: none;
+                transition: stroke 0.3s ease;
+            }
 
-        .hero-section p {
-            color: #fdfdfd;
-            font-size: 20px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
-            margin-bottom: 30px; /* Added spacing below paragraph for the button */
-        }
+            .nav-links li:hover .cart-icon svg { stroke: #d45d79; }
 
-        /* Explore Collection Button Styling */
-        .explore-btn {
-            display: inline-block;
-            padding: 12px 35px;
-            background-color: #d45d79;
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 18px;
-            border-radius: 4px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        }
+            .cart-badge {
+                position: absolute;
+                top: -8px;
+                right: -12px;
+                background-color: #d45d79;
+                color: #ffffff;
+                font-size: 11px;
+                font-weight: bold;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
 
-        .explore-btn:hover {
-            background-color: #b84b63; /* Darker pink on hover */
-            transform: translateY(-2px); /* Slight lift effect on hover */
-        }
-    </style>
-</head>
-<body>
+            .arrow { font-size: 12px; color: #888; }
 
-    <!-- Main Navigation Bar -->
-    <nav class="navbar">
-        <!-- Top Left: Logo Image & Name -->
-        <div class="logo">
-            <!-- REPLACE 'LOGO_FILE_ID_HERE' WITH YOUR GOOGLE DRIVE LOGO ID -->
-            <img src="logo.png" alt="Dhaga piroi Logo">
-            <span class="brand-name">Dhaga piroi</span>
+            /* Hero Section */
+            .hero-section {
+                text-align: center;
+                padding: 120px 20px;
+                background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('hero.jpeg');
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+                background-repeat: no-repeat;
+                min-height: calc(100vh - 75px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                z-index: 1;
+            }
+
+            .hero-section h1 {
+                color: #fdfdfd;
+                font-size: 56px;
+                margin-bottom: 10px;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+                animation: fadeInUpLoad 1s ease-out forwards;
+            }
+
+            .hero-section p {
+                color: #fdfdfd;
+                font-size: 20px;
+                text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+                margin-bottom: 30px;
+                animation: fadeInUpLoad 1s ease-out forwards;
+            }
+
+            .explore-btn {
+                display: inline-block;
+                padding: 12px 35px;
+                background-color: #d45d79;
+                color: #ffffff;
+                text-decoration: none;
+                font-size: 18px;
+                border-radius: 4px;
+                transition: background-color 0.3s ease, transform 0.2s ease;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+                animation: fadeInUpLoad 1s ease-out forwards;
+            }
+
+            .explore-btn:hover {
+                background-color: #b84b63;
+                transform: translateY(-3px);
+            }
+
+            /* Featured Section */
+            .featured-section { padding: 80px 50px; background-color: #ffffff; }
+
+            .section-title {
+                text-align: center;
+                font-size: 36px;
+                color: #333333;
+                margin-bottom: 50px;
+                font-family: 'Georgia', serif;
+                position: relative;
+            }
+            
+            .section-title::after {
+                content: '';
+                width: 80px;
+                height: 3px;
+                background-color: #d45d79;
+                display: block;
+                margin: 15px auto 0;
+                border-radius: 2px;
+            }
+
+            .product-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr); /* Desktop par fix 4-4 cards ki line */
+                gap: 40px;
+                max-width: 1250px;
+                margin: 0 auto;
+            }
+
+            /* ----- DYNAMIC PRODUCT CARDS (SINGLE HOVER EFFECT) ----- */
+            .product-card {
+                background: #ffffff;
+                border-radius: 12px;
+                padding-bottom: 20px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+                transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                border: 2px solid transparent; /* Initially transparent border */
+                animation: fadeInUpLoad 1s ease-out forwards;
+                position: relative;
+                z-index: 1;
+            }
+
+            /* Single time glow and border reveal on hover */
+            .product-card:hover {
+                transform: translateY(-8px); /* Lifts the card once */
+                border-color: #d45d79; /* Border turns pink smoothly and stays */
+                box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 0 15px rgba(212, 93, 121, 0.3); /* Adds a stable pink glow */
+                z-index: 2;
+            }
+
+            .img-container { 
+                width: 100%; 
+                aspect-ratio: 4/5; 
+                overflow: hidden; 
+                margin-bottom: 20px; 
+                background-color: #fafafa; 
+                position: relative;
+                border-radius: 10px 10px 0 0; /* Match card inner radius */
+            }
+
+            .img-container::after {
+                content: '';
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background: linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.15) 100%);
+                opacity: 0;
+                transition: opacity 0.5s ease;
+            }
+            .product-card:hover .img-container::after { opacity: 1; }
+
+            .product-img { 
+                width: 100%; 
+                height: 100%; 
+                object-fit: cover; 
+                transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); 
+            }
+            
+            .product-card:hover .product-img { 
+                transform: scale(1.08); /* Gentle zoom */
+            }
+
+            .product-info { width: 100%; padding: 0 20px; text-align: center; display: flex; flex-direction: column; flex-grow: 1; background-color: #fff; z-index: 2; border-radius: 0 0 10px 10px; }
+
+            .product-title {
+                font-size: 17px;
+                font-weight: 600;
+                color: #222222;
+                margin-bottom: 8px;
+                font-family: 'Georgia', serif;
+                transition: color 0.3s ease;
+            }
+            
+            .product-card:hover .product-title { color: #d45d79; }
+
+            .product-price { 
+                font-size: 19px; 
+                color: #d45d79; 
+                font-weight: bold; 
+                margin-bottom: 20px; 
+                transition: transform 0.3s ease;
+            }
+            
+            .product-card:hover .product-price { transform: scale(1.1); }
+
+            /* Simple, Clean Button (Reverted from sweeping fill) */
+            .add-to-cart-btn {
+                width: 100%; padding: 12px; background-color: #222222; color: #ffffff;
+                border: none; border-radius: 6px; font-size: 14px; font-weight: bold;
+                text-transform: uppercase; cursor: pointer; transition: all 0.3s ease;
+                display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: auto;
+            }
+            
+            .add-to-cart-btn:hover { background-color: #d45d79; }
+            .add-to-cart-btn:active { transform: scale(0.95); }
+            
+            .add-to-cart-btn svg { 
+                width: 18px; height: 18px; fill: currentColor; 
+            }
+
+            /* Footer */
+            .footer { background-color: #1a1a1a; color: #f8f9fa; padding: 70px 0 20px; margin-top: 50px; }
+            .footer-container { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; padding: 0 20px; margin-bottom: 40px; }
+            
+            .contact-info { list-style: none; display: flex; justify-content: center; gap: 40px; margin: 0 auto; }
+            .contact-info a { color: #cccccc; transition: all 0.3s ease; cursor: pointer; display: block; }
+            .contact-info a:hover { color: #d45d79; transform: translateY(-5px); }
+            .contact-icon { width: 32px; height: 32px; fill: currentColor; }
+            .footer-bottom { text-align: center; padding-top: 25px; border-top: 1px solid #333333; color: #888888; font-size: 14px; }
+
+            @keyframes fadeInUpLoad {
+                from { opacity: 0; transform: translateY(50px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            /* ========================================= */
+            /* RESPONSIVE DESIGN (Media Queries)         */
+            /* ========================================= */
+
+            /* Tablet View */
+            @media (max-width: 1024px) {
+                .navbar { padding: 15px 20px; }
+                .nav-links > li { margin-left: 15px; }
+                .hero-section h1 { font-size: 42px; }
+                .featured-section { padding: 60px 20px; }
+                .product-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; } /* Tablet par 2-2 ki line */
+            }
+
+            /* Mobile View */
+            @media (max-width: 768px) {
+                /* Navbar adjustments for mobile */
+                .navbar { padding: 15px 20px; }
+                
+                .hamburger { display: flex; } /* Show Hamburger */
+                
+                /* Hide normal links and prepare for dropdown */
+                .nav-links {
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    width: 100%;
+                    background-color: #ffffff;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+                    max-height: 0;
+                    overflow: hidden;
+                    transition: max-height 0.3s ease;
+                }
+
+                /* CSS Checkbox Hack trigger */
+                #nav-check:checked ~ .nav-links {
+                    max-height: 500px; /* Expands menu */
+                    overflow-y: auto;
+                }
+
+                .nav-links > li {
+                    width: 100%;
+                    margin: 0;
+                    border-bottom: 1px solid #f0f0f0;
+                }
+
+                .nav-links a { padding: 15px 20px; width: 100%; }
+                .nav-links > li > a::after { display: none; } /* Remove underline in mobile */
+
+                /* Fix dropdowns for mobile (Static positioning instead of floating) */
+                .dropdown-menu, .sub-dropdown-menu {
+                    position: static;
+                    width: 100%;
+                    box-shadow: none;
+                    background-color: #fafafa;
+                    padding-left: 20px;
+                    /* Revert to mobile display logic to avoid animation overlap */
+                    display: none; 
+                    visibility: visible;
+                    opacity: 1;
+                    transform: none;
+                }
+
+                .dropdown-menu a:hover { padding-left: 20px; } /* Reset text slide on mobile */
+
+                .nav-links li:hover > .dropdown-menu { display: block; }
+                .dropdown-menu li:hover > .sub-dropdown-menu { display: block; }
+
+                /* Hero Section adjustments */
+                .hero-section h1 { font-size: 32px; }
+                .hero-section p { font-size: 16px; }
+
+                /* Feature Section adjustments */
+                .section-title { font-size: 28px; }
+                .product-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; } /* Mobile par apne aap adjust */
+                
+                /* Footer adjustments */
+                .contact-info { gap: 25px; }
+            }
+        </style>
+    </head>
+    <body>
+
+        <!-- Main Navigation Bar -->
+        <nav class="navbar">
+            <!-- Top Left: Logo Image & Name -->
+            <div class="logo">
+                <img src="logo.png" alt="Dhaga piroi Logo">
+                <span class="brand-name">Dhaga piroi</span>
+            </div>
+
+            <!-- CSS Checkbox Hack for Mobile Menu -->
+            <input type="checkbox" id="nav-check">
+            <label for="nav-check" class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+
+            <!-- Top Right: Navigation Menu -->
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                
+                <li>
+                    <a href="#">Categories ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Necklace</a></li>
+                        <li><a href="#">Sets</a></li>
+                        <li><a href="#">Earrings</a></li>
+                        <li><a href="#">Key Chain</a></li>
+                        <li><a href="#">Hampers</a></li>
+                        <li>
+                            <a href="#">Charms <span class="arrow">▶</span></a>
+                            <ul class="sub-dropdown-menu">
+                                <li><a href="#">Bag Charms</a></li>
+                                <li><a href="#">Phone Charms</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Hair Accessories <span class="arrow">▶</span></a>
+                            <ul class="sub-dropdown-menu">
+                                <li><a href="#">Hair Claws</a></li>
+                                <li><a href="#">Hair Gajra</a></li>
+                                <li><a href="#">Prandi</a></li>
+                                <li><a href="#">Scrunchies</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Kids <span class="arrow">▶</span></a>
+                            <ul class="sub-dropdown-menu">
+                                <li><a href="#">Hand Pocha</a></li>
+                                <li><a href="#">Necklace</a></li>
+                                <li><a href="#">Coller Necklace</a></li>
+                                <li><a href="#">Hair Band</a></li>
+                                <li><a href="#">Hair Pin</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#">Specials ▾</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#">Seasonal <span class="arrow">▶</span></a>
+                            <ul class="sub-dropdown-menu">
+                                <li><a href="#">Christmas</a></li>
+                                <li><a href="#">New Year</a></li>
+                                <li><a href="#">Rakhi Special</a></li>
+                                <li><a href="#">Navratri</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Gifts <span class="arrow">▶</span></a>
+                            <ul class="sub-dropdown-menu">
+                                <li><a href="#">Under 500</a></li>
+                                <li><a href="#">Under 1000</a></li>
+                                <li><a href="#">Under 2000</a></li>
+                                <li><a href="#">Friendship Day</a></li>
+                                <li><a href="#">Valentines Mini</a></li>
+                                <li><a href="#">Bouquets</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li><a href="#">About</a></li>
+                
+                <li>
+                    <a href="#" class="cart-icon" style="padding: 10px 20px;">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        </svg>
+                        <span class="cart-badge">0</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Homepage Body -->
+        <div class="hero-section">
+            <h1>Welcome to Dhaga piroi</h1>
+            <p>Handmade with Love, Threaded with Passion</p>
+            <a href="#featured" class="explore-btn">Explore Collection</a>
         </div>
 
-        <!-- Top Right: Navigation Menu -->
-        <ul class="nav-links">
-            <li><a href="#">Home</a></li>
+        <!-- Featured Items Section -->
+        <section id="featured" class="featured-section">
+            <h2 class="section-title">Featured Collections</h2>
             
-            <!-- Categories Section -->
-            <li>
-                <a href="#">Categories ▾</a>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Necklace</a></li>
-                    <li><a href="#">Sets</a></li>
-                    <li><a href="#">Earrings</a></li>
-                    <li><a href="#">Key Chain</a></li>
-                    <li><a href="#">Hampers</a></li>
-                    
-                    <!-- Charms Sub-menu -->
+            <div class="product-grid">
+                <!-- Product Card 1 -->
+                <div class="product-card">
+                    <div class="img-container"><img src="https://placehold.co/400x500/fafafa/d45d79?text=Necklace" alt="Item" class="product-img"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Handmade Pearl Necklace</h3>
+                        <span class="product-price">₹ 499</span>
+                        <button class="add-to-cart-btn">
+                            <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg> Add to Cart
+                        </button>
+                    </div>
+                </div>
+                <!-- Product Card 2 -->
+                <div class="product-card">
+                    <div class="img-container"><img src="https://placehold.co/400x500/fafafa/d45d79?text=Charm" alt="Item" class="product-img"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Floral Bag Charm</h3>
+                        <span class="product-price">₹ 299</span>
+                        <button class="add-to-cart-btn">
+                            <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg> Add to Cart
+                        </button>
+                    </div>
+                </div>
+                <!-- Product Card 3 -->
+                <div class="product-card">
+                    <div class="img-container"><img src="https://placehold.co/400x500/fafafa/d45d79?text=Earrings" alt="Item" class="product-img"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Kundan Drop Earrings</h3>
+                        <span class="product-price">₹ 350</span>
+                        <button class="add-to-cart-btn">
+                            <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg> Add to Cart
+                        </button>
+                    </div>
+                </div>
+                <!-- Product Card 4 -->
+                <div class="product-card">
+                    <div class="img-container"><img src="https://placehold.co/400x500/fafafa/d45d79?text=Scrunchies" alt="Item" class="product-img"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Silk Scrunchie Set</h3>
+                        <span class="product-price">₹ 199</span>
+                        <button class="add-to-cart-btn">
+                            <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg> Add to Cart
+                        </button>
+                    </div>
+                </div>
+                <!-- Product Card 5 -->
+                <div class="product-card">
+                    <div class="img-container"><img src="https://placehold.co/400x500/fafafa/d45d79?text=Kids" alt="Item" class="product-img"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Kids Beaded Necklace</h3>
+                        <span class="product-price">₹ 250</span>
+                        <button class="add-to-cart-btn">
+                            <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg> Add to Cart
+                        </button>
+                    </div>
+                </div>
+                <!-- Product Card 6 -->
+                <div class="product-card">
+                    <div class="img-container"><img src="https://placehold.co/400x500/fafafa/d45d79?text=Key+Chain" alt="Item" class="product-img"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Rose Gold Key Chain</h3>
+                        <span class="product-price">₹ 150</span>
+                        <button class="add-to-cart-btn">
+                            <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg> Add to Cart
+                        </button>
+                    </div>
+                </div>
+                <!-- Product Card 7 -->
+                <div class="product-card">
+                    <div class="img-container"><img src="https://placehold.co/400x500/fafafa/d45d79?text=Gajra" alt="Item" class="product-img"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Traditional Hair Gajra</h3>
+                        <span class="product-price">₹ 399</span>
+                        <button class="add-to-cart-btn">
+                            <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg> Add to Cart
+                        </button>
+                    </div>
+                </div>
+                <!-- Product Card 8 -->
+                <div class="product-card">
+                    <div class="img-container"><img src="https://placehold.co/400x500/fafafa/d45d79?text=Hamper" alt="Item" class="product-img"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">Friendship Day Hamper</h3>
+                        <span class="product-price">₹ 999</span>
+                        <button class="add-to-cart-btn">
+                            <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg> Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Section -->
+        <footer class="footer">
+            <div class="footer-container">
+                <ul class="contact-info">
                     <li>
-                        <a href="#">Charms <span class="arrow">▶</span></a>
-                        <ul class="sub-dropdown-menu">
-                            <li><a href="#">Bag Charms</a></li>
-                            <li><a href="#">Phone Charms</a></li>
-                        </ul>
+                        <a href="https://www.instagram.com/dhagapiroi/" target="_blank" title="Instagram">
+                            <svg class="contact-icon" viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/></svg>
+                        </a>
                     </li>
-                    
-                    <!-- Hair Accessories Sub-menu -->
                     <li>
-                        <a href="#">Hair Accessories <span class="arrow">▶</span></a>
-                        <ul class="sub-dropdown-menu">
-                            <li><a href="#">Hair Claws</a></li>
-                            <li><a href="#">Hair Gajra</a></li>
-                            <li><a href="#">Prandi</a></li>
-                            <li><a href="#">Scrunchies</a></li>
-                        </ul>
+                        <a href="tel:+919876543210" title="Call Us">
+                            <svg class="contact-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                        </a>
                     </li>
-                    
-                    <!-- Kids Sub-menu -->
                     <li>
-                        <a href="#">Kids <span class="arrow">▶</span></a>
-                        <ul class="sub-dropdown-menu">
-                            <li><a href="#">Hand Pocha</a></li>
-                            <li><a href="#">Necklace</a></li>
-                            <li><a href="#">Coller Necklace</a></li>
-                            <li><a href="#">Hair Band</a></li>
-                            <li><a href="#">Hair Pin</a></li>
-                        </ul>
+                        <a href="mailto:info@dhagapiroi.com" title="Email Us">
+                            <svg class="contact-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://maps.google.com/?q=Ahmedabad,+Gujarat" target="_blank" title="Location">
+                            <svg class="contact-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        </a>
                     </li>
                 </ul>
-            </li>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Dhaga piroi. All rights reserved. | Designed for Quality.</p>
+            </div>
+        </footer>
 
-            <!-- Specials Section -->
-            <li>
-                <a href="#">Specials ▾</a>
-                <ul class="dropdown-menu">
-                    <!-- Seasonal Sub-menu -->
-                    <li>
-                        <a href="#">Seasonal <span class="arrow">▶</span></a>
-                        <ul class="sub-dropdown-menu">
-                            <li><a href="#">Christmas</a></li>
-                            <li><a href="#">New Year</a></li>
-                            <li><a href="#">Rakhi Special</a></li>
-                            <li><a href="#">Navratri</a></li>
-                        </ul>
-                    </li>
-                    
-                    <!-- Gifts Sub-menu -->
-                    <li>
-                        <a href="#">Gifts <span class="arrow">▶</span></a>
-                        <ul class="sub-dropdown-menu">
-                            <li><a href="#">Under 500</a></li>
-                            <li><a href="#">Under 1000</a></li>
-                            <li><a href="#">Under 2000</a></li>
-                            <li><a href="#">Friendship Day</a></li>
-                            <li><a href="#">Valentines Mini</a></li>
-                            <li><a href="#">Bouquets</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-
-            <!-- About Section -->
-            <li><a href="#">About</a></li>
+        <!-- Force Scroll to Top on Refresh -->
+        <script>
+            // Prevent browser from trying to remember scroll position
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
             
-            <!-- Cart Section -->
-            <li>
-                <a href="#" class="cart-icon">
-                    <!-- Shopping Cart SVG (Wireframe style like image) -->
-                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="9" cy="21" r="1"></circle>
-                        <circle cx="20" cy="21" r="1"></circle>
-                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                    </svg>
-                    <span class="cart-badge">0</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+            // Ensure scroll to top upon page load
+            window.onload = function() {
+                window.scrollTo(0, 0);
+            };
+        </script>
 
-    <!-- Homepage Body -->
-    <div class="hero-section">
-        <h1>Welcome to Dhaga piroi</h1>
-        <p>Handmade with Love, Threaded with Passion</p>
-        <a href="#" class="explore-btn">Explore Collection</a>
-    </div>
-
-</body>
-</html>
+    </body>
+    </html>
