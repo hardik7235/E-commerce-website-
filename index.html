@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Home</title>
+    <style>
+        /* Base Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            overflow-x: hidden; /* Prevents horizontal scrolling */
+        }
+
+        /* Top Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff; /* Pure white background like image */
+            padding: 15px 50px; 
+            color: #333333;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 1100;
+        }
+
+        /* Left Side: Company Logo & Name */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Space between logo and text */
+            cursor: pointer;
+        }
+
+        .logo img {
+            height: 45px; /* Adjust based on your image */
+            width: 45px;
+            object-fit: contain; 
+            border-radius: 50%; /* Makes image circular */
+        }
+
+        .brand-name {
+            color: #d45d79; /* Pink color */
+            font-size: 28px;
+            font-weight: bold;
+            font-family: 'Georgia', serif; /* Serif font matching the image */
+            letter-spacing: 0.5px;
+        }
+
+        /* Right Side: Navigation Links */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links > li {
+            position: relative;
+            margin-left: 25px;
+        }
+
+        .nav-links a {
+            color: #333333; /* Dark text for off-white nav */
+            text-decoration: none;
+            font-size: 16px;
+            display: block;
+            padding: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links > li > a:hover {
+            color: #d45d79; /* Pink hover effect */
+        }
+
+        /* First Level Dropdown Menus */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #ffffff;
+            min-width: 220px;
+            list-style: none;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            border-radius: 0 0 5px 5px;
+            z-index: 1000;
+        }
+
+        .dropdown-menu li {
+            position: relative;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-menu li:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a {
+            color: #333333;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #fff0f3; /* Light pink background tint on hover */
+            color: #d45d79; /* Pink text on hover */
+        }
+
+        /* Second Level Sub-Dropdowns (Opening on the right side) */
+        .sub-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 100%; /* Pushes the menu to the exact right of the parent */
+            background-color: #ffffff;
+            min-width: 200px;
+            list-style: none;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            border-radius: 0 5px 5px 5px;
+        }
+
+        /* Hover Logic to reveal menus */
+        .nav-links li:hover > .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu li:hover > .sub-dropdown-menu {
+            display: block;
+        }
+
+        /* Cart Icon SVG & Badge Styling */
+        .cart-icon {
+            display: flex;
+            align-items: center;
+            position: relative; /* Badge positioning ke liye */
+        }
+        
+        .cart-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: #555555; /* Dark grey stroke */
+            fill: none;
+            transition: stroke 0.3s ease;
+        }
+
+        .nav-links li:hover .cart-icon svg {
+            stroke: #d45d79;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background-color: #d45d79;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: bold;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .arrow {
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* Homepage Main Content Background */
+        .hero-section {
+            text-align: center;
+            padding: 120px 20px;
+            
+            /* REPLACE 'BACKGROUND_FILE_ID_HERE' WITH YOUR GOOGLE DRIVE IMAGE ID */
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('hero.jpeg');        
+            background-size: cover; /* Auto-adjusts image to fit screen */
+            background-position: center; 
+            background-repeat: no-repeat;
+            min-height: calc(100vh - 75px); /* Full screen height minus navbar */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section h1 {
+            color: #fdfdfd; /* Off-white text */
+            font-size: 56px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6); /* Shadow for readability */
+        }
+
+        .hero-section p {
+            color: #fdfdfd;
+            font-size: 20px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+            margin-bottom: 30px; /* Added spacing below paragraph for the button */
+        }
+
+        /* Explore Collection Button Styling */
+        .explore-btn {
+            display: inline-block;
+            padding: 12px 35px;
+            background-color: #d45d79;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .explore-btn:hover {
+            background-color: #b84b63; /* Darker pink on hover */
+            transform: translateY(-2px); /* Slight lift effect on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Navigation Bar -->
+    <nav class="navbar">
+        <!-- Top Left: Logo Image & Name -->
+        <div class="logo">
+            <!-- REPLACE 'LOGO_FILE_ID_HERE' WITH YOUR GOOGLE DRIVE LOGO ID -->
+            <img src="logo.png" alt="Dhaga piroi Logo">
+            <span class="brand-name">Dhaga piroi</span>
+        </div>
+
+        <!-- Top Right: Navigation Menu -->
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            
+            <!-- Categories Section -->
+            <li>
+                <a href="#">Categories ▾</a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Necklace</a></li>
+                    <li><a href="#">Sets</a></li>
+                    <li><a href="#">Earrings</a></li>
+                    <li><a href="#">Key Chain</a></li>
+                    <li><a href="#">Hampers</a></li>
+                    
+                    <!-- Charms Sub-menu -->
+                    <li>
+                        <a href="#">Charms <span class="arrow">▶</span></a>
+                        <ul class="sub-dropdown-menu">
+                            <li><a href="#">Bag Charms</a></li>
+                            <li><a href="#">Phone Charms</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Hair Accessories Sub-menu -->
+                    <li>
+                        <a href="#">Hair Accessories <span class="arrow">▶</span></a>
+                        <ul class="sub-dropdown-menu">
+                            <li><a href="#">Hair Claws</a></li>
+                            <li><a href="#">Hair Gajra</a></li>
+                            <li><a href="#">Prandi</a></li>
+                            <li><a href="#">Scrunchies</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Kids Sub-menu -->
+                    <li>
+                        <a href="#">Kids <span class="arrow">▶</span></a>
+                        <ul class="sub-dropdown-menu">
+                            <li><a href="#">Hand Pocha</a></li>
+                            <li><a href="#">Necklace</a></li>
+                            <li><a href="#">Coller Necklace</a></li>
+                            <li><a href="#">Hair Band</a></li>
+                            <li><a href="#">Hair Pin</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Specials Section -->
+            <li>
+                <a href="#">Specials ▾</a>
+                <ul class="dropdown-menu">
+                    <!-- Seasonal Sub-menu -->
+                    <li>
+                        <a href="#">Seasonal <span class="arrow">▶</span></a>
+                        <ul class="sub-dropdown-menu">
+                            <li><a href="#">Christmas</a></li>
+                            <li><a href="#">New Year</a></li>
+                            <li><a href="#">Rakhi Special</a></li>
+                            <li><a href="#">Navratri</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Gifts Sub-menu -->
+                    <li>
+                        <a href="#">Gifts <span class="arrow">▶</span></a>
+                        <ul class="sub-dropdown-menu">
+                            <li><a href="#">Under 500</a></li>
+                            <li><a href="#">Under 1000</a></li>
+                            <li><a href="#">Under 2000</a></li>
+                            <li><a href="#">Friendship Day</a></li>
+                            <li><a href="#">Valentines Mini</a></li>
+                            <li><a href="#">Bouquets</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- About Section -->
+            <li><a href="#">About</a></li>
+            
+            <!-- Cart Section -->
+            <li>
+                <a href="#" class="cart-icon">
+                    <!-- Shopping Cart SVG (Wireframe style like image) -->
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span class="cart-badge">0</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Homepage Body -->
+    <div class="hero-section">
+        <h1>Welcome to Dhaga piroi</h1>
+        <p>Handmade with Love, Threaded with Passion</p>
+        <a href="#" class="explore-btn">Explore Collection</a>
+    </div>
+
+</body>
+</html>
