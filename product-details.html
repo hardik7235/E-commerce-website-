@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - Dhaga piroi</title>
+    <style>
+        /* Base Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #fcf8f9;
+            color: #333333;
+            overflow-x: hidden;
+        }
+
+        /* ========================================= */
+        /* PREMIUM ANIMATED NAVBAR (SAME AS HOME)   */
+        /* ========================================= */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 15px 50px; 
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1200;
+            animation: slideDownNav 0.6s ease-out forwards;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.03);
+        }
+
+        .logo img {
+            height: 45px; 
+            width: 45px;
+            object-fit: contain; 
+            border-radius: 50%;
+        }
+
+        .brand-name {
+            color: #d45d79;
+            font-size: 28px;
+            font-weight: bold;
+            font-family: 'Georgia', serif;
+            letter-spacing: 0.5px;
+        }
+
+        /* Responsive Hamburger Hack (0% JS) */
+        #nav-check {
+            display: none;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 1300;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #333333;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        /* Navigation Links Layout */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links > li {
+            position: relative;
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: #333333;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            display: block;
+            padding: 10px 12px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        /* Link Underline Animation Effect */
+        .nav-links > li > a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 2px;
+            left: 50%;
+            background-color: #d45d79;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links > li > a:hover::after {
+            width: 80%;
+            left: 10%;
+        }
+
+        .nav-links > li > a:hover {
+            color: #d45d79;
+        }
+
+        /* Level 1 Dropdowns */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #ffffff;
+            min-width: 230px;
+            list-style: none;
+            box-shadow: 0px 8px 24px rgba(0,0,0,0.08);
+            border-radius: 6px;
+            padding: 5px 0;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu li {
+            position: relative;
+        }
+
+        .dropdown-menu a {
+            color: #444444;
+            padding: 12px 20px;
+            font-size: 14.5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #f9f9f9;
+        }
+
+        .dropdown-menu li:last-child a {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #fff5f7;
+            color: #d45d79;
+            padding-left: 24px;
+        }
+
+        /* Level 2 Nested Sub-Dropdowns (Right Side Flyout) */
+        .sub-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            background-color: #ffffff;
+            min-width: 210px;
+            list-style: none;
+            box-shadow: 0px 8px 24px rgba(0,0,0,0.08);
+            border-radius: 6px;
+            padding: 5px 0;
+        }
+
+        /* Hover Triggers with CSS Animations */
+        .nav-links li:hover > .dropdown-menu {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li:hover > .sub-dropdown-menu {
+            display: block;
+            animation: fadeInRight 0.3s ease forwards;
+        }
+
+        .arrow {
+            font-size: 11px;
+            color: #aaa;
+            transition: transform 0.3s;
+        }
+        
+        .dropdown-menu li:hover > a .arrow {
+            transform: translateX(3px);
+            color: #d45d79;
+        }
+
+        /* Cart Icon Component */
+        .cart-icon {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .cart-icon svg {
+            width: 23px;
+            height: 23px;
+            stroke: #444444;
+            fill: none;
+            transition: all 0.3s ease;
+        }
+
+        .cart-icon:hover svg {
+            stroke: #d45d79;
+            transform: scale(1.1);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -8px;
+            background-color: #d45d79;
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: bold;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* ========================================= */
+        /* PREMIUM PRODUCT DETAILS SECTION STYLES    */
+        /* ========================================= */
+        .product-container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 30px;
+        }
+
+        .product-wrapper {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 60px;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(212, 93, 121, 0.04);
+            border: 1px solid #f0e4e6;
+        }
+
+        /* Left Side: Product Image Display */
+        .product-image-block {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #faf6f7;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #f9eff1;
+        }
+
+        .main-display-img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 16px;
+            transition: transform 0.5s ease;
+        }
+
+        .product-image-block:hover .main-display-img {
+            transform: scale(1.04);
+        }
+
+        /* Right Side: Information Block */
+        .product-info-block {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-right: 20px;
+        }
+
+        .product-meta-tag {
+            align-self: flex-start;
+            background-color: #fff0f2;
+            color: #d45d79;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 6px 16px;
+            border-radius: 50px;
+            margin-bottom: 15px;
+        }
+
+        .main-product-title {
+            font-size: 38px;
+            font-family: 'Georgia', serif;
+            color: #222222;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+
+        .main-product-price {
+            font-size: 32px;
+            color: #d45d79;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .product-description-text {
+            font-size: 15.5px;
+            color: #666666;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            border-top: 1px dashed #f0e2e4;
+            padding-top: 20px;
+        }
+
+        /* Quantity Selector Box Layout */
+        .quantity-selector-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        .quantity-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: #444444;
+        }
+
+        .quantity-input-field {
+            width: 75px;
+            height: 45px;
+            border: 2px solid #e8d5d8;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: #222222;
+            outline: none;
+            background-color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-input-field:focus {
+            border-color: #d45d79;
+            box-shadow: 0 0 0 3px rgba(212, 93, 121, 0.15);
+        }
+
+        /* Interactive Border Highlight Action on Hover (One-Time Trigger) */
+        .action-button-wrapper {
+            position: relative;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .product-wrapper:hover .action-button-wrapper {
+            border-color: #d45d79;
+            box-shadow: 0 0 15px rgba(212, 93, 121, 0.2);
+            padding: 2px;
+        }
+
+        /* Add to Cart Button Core Styling */
+        .add-to-cart-action-btn {
+            width: 100%;
+            padding: 16px 30px;
+            background-color: #222222;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-to-cart-action-btn:hover {
+            background-color: #d45d79;
+        }
+
+        .add-to-cart-action-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* Keyframes Animations */
+        @keyframes slideDownNav {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* ========================================= */
+        /* RESPONSIVE STRUCTURE MEDIA QUERIES        */
+        /* ========================================= */
+        @media (max-width: 1024px) {
+            .navbar { padding: 15px 25px; }
+            .product-wrapper { gap: 40px; padding: 30px; }
+            .main-product-title { font-size: 32px; }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #ffffff;
+                flex-direction: column;
+                align-items: flex-start;
+                box-shadow: 0px 10px 20px rgba(0,0,0,0.08);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-in-out;
+            }
+
+            #nav-check:checked ~ .nav-links {
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
+            .nav-links > li {
+                width: 100%;
+                margin: 0;
+                border-bottom: 1px solid #f5f5f5;
+            }
+
+            .nav-links a {
+                padding: 15px 25px;
+                width: 100%;
+            }
+
+            .dropdown-menu, .sub-dropdown-menu {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+                background-color: #fdfafb;
+                padding-left: 20px;
+                opacity: 1;
+                transform: none;
+                display: block; /* Expand layout visually natively in mobile view */
+            }
+
+            .arrow { display: none; }
+
+            /* Product Page Layout Flip for Mobile Devices */
+            .product-wrapper {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 20px;
+            }
+
+            .product-info-block {
+                padding-right: 0;
+            }
+
+            .main-product-title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Dynamic Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="Dhaga piroi Logo">
+            <span class="brand-name">Dhaga piroi</span>
+        </div>
+
+        <!-- CSS Only Hack Interface Trigger -->
+        <input type="checkbox" id="nav-check">
+        <label for="nav-check" class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+
+        <!-- Navbar Menu Structure -->
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            
+            <!-- Category Core Sub-Sections Tree -->
+            <li>
+                <a href="#">Categories ▾</a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Necklace</a></li>
+                    <li><a href="#">Sets</a></li>
+                    <li><a href="#">Earrings</a></li>
+                    <li><a href="#">Key Chain</a></li>
+                    <li><a href="#">Hampers</a></li>
+                    <li>
+                        <a href="#">Charms <span class="arrow">▶</span></a>
+                        <ul class="sub-dropdown-menu">
+                            <li><a href="#">Bag Charms</a></li>
+                            <li><a href="#">Phone Charms</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Hair Accessories <span class="arrow">▶</span></a>
+                        <ul class="sub-dropdown-menu">
+                            <li><a href="#">Hair Claws</a></li>
+                            <li><a href="#">Hair Gajra</a></li>
+                            <li><a href="#">Prandi</a></li>
+                            <li><a href="#">Scrunchies</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Kids <span class="arrow">▶</span></a>
+                        <ul class="sub-dropdown-menu">
+                            <li><a href="#">Hand Pocha</a></li>
+                            <li><a href="#">Necklace</a></li>
+                            <li><a href="#">Coller Necklace</a></li>
+                            <li><a href="#">Hair Band</a></li>
+                            <li><a href="#">Hair Pin</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Specials Core Sub-Sections Tree -->
+            <li>
+                <a href="#">Specials ▾</a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#">Seasonal <span class="arrow">▶</span></a>
+                        <ul class="sub-dropdown-menu">
+                            <li><a href="#">Christmas</a></li>
+                            <li><a href="#">New Year</a></li>
+                            <li><a href="#">Rakhi Special</a></li>
+                            <li><a href="#">Navratri</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Gifts <span class="arrow">▶</span></a>
+                        <ul class="sub-dropdown-menu">
+                            <li><a href="#">Under 500</a></li>
+                            <li><a href="#">Under 1000</a></li>
+                            <li><a href="#">Under 2000</a></li>
+                            <li><a href="#">Friendship Day</a></li>
+                            <li><a href="#">Valentines Mini</a></li>
+                            <li><a href="#">Bouquets</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li><a href="#">About</a></li>
+            
+            <!-- Functional Shopping Cart Icon Component -->
+            <li>
+                <a href="#" class="cart-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span class="cart-badge">0</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Product Detail Container Section -->
+    <main class="product-container">
+        <div class="product-wrapper">
+            
+            <!-- Left Grid: Styled Image Area -->
+            <div class="product-image-block">
+                <img src="https://placehold.co/600x600/fcf1h3/d45d79?text=Kids+Necklace" alt="Kids Flower Necklace Image" class="main-display-img">
+            </div>
+
+            <!-- Right Grid: Information Area -->
+            <div class="product-info-block">
+                <span class="product-meta-tag">Handmade Craft</span>
+                <h1 class="main-product-title">Kids Flower Necklace</h1>
+                <div class="main-product-price">₹ 499.00</div>
+                
+                <p class="product-description-text">
+                    Soft crochet necklace specially designed for kids. Made with high-quality comfortable threads, skin-friendly materials, and woven beautifully with vibrant floral pattern accents.
+                </p>
+
+                <!-- Quantity Control Element Setup -->
+                <div class="quantity-selector-section">
+                    <span class="quantity-label">Quantity:</span>
+                    <input type="number" class="quantity-input-field" value="1" min="1">
+                </div>
+
+                <!-- Hover Activated Dynamic Highlight Component Base -->
+                <div class="action-button-wrapper">
+                    <button class="add-to-cart-action-btn">
+                        <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>
