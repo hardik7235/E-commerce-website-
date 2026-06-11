@@ -1,0 +1,9 @@
+-- Products table for the e-commerce website
+
+CREATE TABLE products (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY, -- Auto-generates a unique ID
+    name TEXT NOT NULL,                             
+    price NUMERIC(10, 2) NOT NULL,                  
+    description TEXT,                               
+    image_url TEXT                                  
+);
