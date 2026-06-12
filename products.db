@@ -7,3 +7,23 @@ CREATE TABLE products (
     description TEXT,                               
     image_url TEXT                                  
 );
+
+-- Insert the 8 exact items 
+
+INSERT INTO products (name, price, description, image_url) 
+VALUES 
+    ('Handmade Pearl Necklace', 499.00, 'Beautiful handmade pearl necklace for an elegant look.', 'https://placehold.co/600x800/f8f9fa/c86b85?text=Necklace'),
+    
+    ('Floral Bag Charm', 299.00, 'Cute and stylish floral charm for your everyday bags.', 'https://placehold.co/600x800/f8f9fa/c86b85?text=Charm'),
+    
+    ('Kundan Drop Earrings', 350.00, 'Traditional Kundan drop earrings perfect for festive wear.', 'https://placehold.co/600x800/f8f9fa/c86b85?text=Earrings'),
+    
+    ('Silk Scrunchie Set', 199.00, 'Premium soft silk scrunchies to keep your hair healthy and stylish.', 'https://placehold.co/600x800/f8f9fa/c86b85?text=Scrunchies'),
+    
+    ('Kids Beaded Necklace', 250.00, 'Colorful and safe beaded necklace designed specially for kids.', 'https://placehold.co/600x800/f8f9fa/c86b85?text=Kids'),
+    
+    ('Rose Gold Key Chain', 150.00, 'Minimalist and aesthetic rose gold key chain.', 'https://placehold.co/600x800/f8f9fa/c86b85?text=Key+Chain'),
+    
+    ('Traditional Hair Gajra', 399.00, 'Classic artificial hair gajra for traditional Indian outfits.', 'https://placehold.co/600x800/f8f9fa/c86b85?text=Gajra'),
+    
+    ('Friendship Day Hamper', 999.00, 'A complete curated gift hamper to celebrate your special bond.', 'https://placehold.co/600x800/f8f9fa/c86b85?text=Hamper');
