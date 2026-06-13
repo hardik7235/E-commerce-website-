@@ -11,6 +11,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -20,14 +21,13 @@
         }
 
         /* ========================================= */
-        /* PREMIUM ANIMATED NAVBAR (SAME AS HOME)   */
+        /* PREMIUM ANIMATED NAVBAR                   */
         /* ========================================= */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             background-color: #ffffff;
-            /* Sirf is line mein '180px' add kiya hai menu ko left shift karne ke liye */
             padding: 15px 180px 15px 50px; 
             box-shadow: 0 2px 15px rgba(0,0,0,0.05);
             position: sticky;
@@ -63,10 +63,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* Responsive Hamburger Hack (0% JS) */
-        #nav-check {
-            display: none;
-        }
+        #nav-check { display: none; }
 
         .hamburger {
             display: none;
@@ -85,7 +82,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Navigation Links Layout */
         .nav-links {
             list-style: none;
             display: flex;
@@ -110,7 +106,6 @@
             transition: color 0.3s ease;
         }
 
-        /* Link Underline Animation Effect */
         .nav-links > li > a::after {
             content: '';
             position: absolute;
@@ -122,16 +117,9 @@
             transition: all 0.3s ease;
         }
 
-        .nav-links > li > a:hover::after {
-            width: 80%;
-            left: 10%;
-        }
+        .nav-links > li > a:hover::after { width: 80%; left: 10%; }
+        .nav-links > li > a:hover { color: #d45d79; }
 
-        .nav-links > li > a:hover {
-            color: #d45d79;
-        }
-
-        /* Level 1 Dropdowns */
         .dropdown-menu {
             display: none;
             position: absolute;
@@ -148,9 +136,7 @@
             transition: all 0.3s ease;
         }
 
-        .dropdown-menu li {
-            position: relative;
-        }
+        .dropdown-menu li { position: relative; }
 
         .dropdown-menu a {
             color: #444444;
@@ -162,9 +148,7 @@
             border-bottom: 1px solid #f9f9f9;
         }
 
-        .dropdown-menu li:last-child a {
-            border-bottom: none;
-        }
+        .dropdown-menu li:last-child a { border-bottom: none; }
 
         .dropdown-menu a:hover {
             background-color: #fff5f7;
@@ -172,7 +156,6 @@
             padding-left: 24px;
         }
 
-        /* Level 2 Nested Sub-Dropdowns (Right Side Flyout) */
         .sub-dropdown-menu {
             display: none;
             position: absolute;
@@ -186,7 +169,6 @@
             padding: 5px 0;
         }
 
-        /* Hover Triggers with CSS Animations */
         .nav-links li:hover > .dropdown-menu {
             display: block;
             opacity: 1;
@@ -198,36 +180,12 @@
             animation: fadeInRight 0.3s ease forwards;
         }
 
-        .arrow {
-            font-size: 11px;
-            color: #aaa;
-            transition: transform 0.3s;
-        }
-        
-        .dropdown-menu li:hover > a .arrow {
-            transform: translateX(3px);
-            color: #d45d79;
-        }
+        .arrow { font-size: 11px; color: #aaa; transition: transform 0.3s; }
+        .dropdown-menu li:hover > a .arrow { transform: translateX(3px); color: #d45d79; }
 
-        /* Cart Icon Component */
-        .cart-icon {
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-        
-        .cart-icon svg {
-            width: 23px;
-            height: 23px;
-            stroke: #444444;
-            fill: none;
-            transition: all 0.3s ease;
-        }
-
-        .cart-icon:hover svg {
-            stroke: #d45d79;
-            transform: scale(1.1);
-        }
+        .cart-icon { display: flex; align-items: center; position: relative; }
+        .cart-icon svg { width: 23px; height: 23px; stroke: #444444; fill: none; transition: all 0.3s ease; }
+        .cart-icon:hover svg { stroke: #d45d79; transform: scale(1.1); }
 
         .cart-badge {
             position: absolute;
@@ -246,12 +204,13 @@
         }
 
         /* ========================================= */
-        /* PREMIUM PRODUCT DETAILS SECTION STYLES    */
+        /* PRODUCT DETAILS SECTION                   */
         /* ========================================= */
         .product-container {
             max-width: 1200px;
             margin: 60px auto;
             padding: 0 30px;
+            min-height: 60vh;
         }
 
         .product-wrapper {
@@ -265,7 +224,6 @@
             border: 1px solid #f0e4e6;
         }
 
-        /* Left Side: Product Image Display */
         .product-image-block {
             width: 100%;
             display: flex;
@@ -285,11 +243,8 @@
             transition: transform 0.5s ease;
         }
 
-        .product-image-block:hover .main-display-img {
-            transform: scale(1.04);
-        }
+        .product-image-block:hover .main-display-img { transform: scale(1.04); }
 
-        /* Right Side: Information Block */
         .product-info-block {
             display: flex;
             flex-direction: column;
@@ -335,7 +290,6 @@
             padding-top: 20px;
         }
 
-        /* Quantity Selector Box Layout */
         .quantity-selector-section {
             display: flex;
             align-items: center;
@@ -343,11 +297,7 @@
             margin-bottom: 35px;
         }
 
-        .quantity-label {
-            font-size: 15px;
-            font-weight: 600;
-            color: #444444;
-        }
+        .quantity-label { font-size: 15px; font-weight: 600; color: #444444; }
 
         .quantity-input-field {
             width: 75px;
@@ -363,12 +313,8 @@
             transition: all 0.3s ease;
         }
 
-        .quantity-input-field:focus {
-            border-color: #d45d79;
-            box-shadow: 0 0 0 3px rgba(212, 93, 121, 0.15);
-        }
+        .quantity-input-field:focus { border-color: #d45d79; box-shadow: 0 0 0 3px rgba(212, 93, 121, 0.15); }
 
-        /* Interactive Border Highlight Action on Hover (One-Time Trigger) */
         .action-button-wrapper {
             position: relative;
             border-radius: 10px;
@@ -382,7 +328,6 @@
             padding: 2px;
         }
 
-        /* Add to Cart Button Core Styling */
         .add-to-cart-action-btn {
             width: 100%;
             padding: 16px 30px;
@@ -402,30 +347,24 @@
             transition: background-color 0.3s ease;
         }
 
-        .add-to-cart-action-btn:hover {
-            background-color: #d45d79;
-        }
-
-        .add-to-cart-action-btn svg {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
-
-        /* Keyframes Animations */
-        @keyframes slideDownNav {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
-        }
-
-        @keyframes fadeInRight {
-            from { opacity: 0; transform: translateX(10px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
+        .add-to-cart-action-btn:hover { background-color: #d45d79; }
+        .add-to-cart-action-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
         /* ========================================= */
-        /* RESPONSIVE STRUCTURE MEDIA QUERIES        */
+        /* FOOTER STYLES                             */
         /* ========================================= */
+        .footer { background-color: #1a1a1a; color: #f8f9fa; padding: 70px 0 20px; margin-top: 50px; }
+        .footer-container { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; padding: 0 20px; margin-bottom: 40px; }
+        .contact-info { list-style: none; display: flex; justify-content: center; gap: 40px; margin: 0 auto; }
+        .contact-info a { color: #cccccc; transition: all 0.3s ease; cursor: pointer; display: block; }
+        .contact-info a:hover { color: #d45d79; transform: translateY(-5px); }
+        .contact-icon { width: 32px; height: 32px; fill: currentColor; }
+        .footer-bottom { text-align: center; padding-top: 25px; border-top: 1px solid #333333; color: #888888; font-size: 14px; }
+
+        @keyframes slideDownNav { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+        @keyframes fadeInRight { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* Responsive Design */
         @media (max-width: 1024px) {
             .navbar { padding: 15px 25px; }
             .product-wrapper { gap: 40px; padding: 30px; }
@@ -434,7 +373,6 @@
 
         @media (max-width: 768px) {
             .hamburger { display: flex; }
-
             .nav-links {
                 position: absolute;
                 top: 100%;
@@ -448,23 +386,9 @@
                 overflow: hidden;
                 transition: max-height 0.3s ease-in-out;
             }
-
-            #nav-check:checked ~ .nav-links {
-                max-height: 80vh;
-                overflow-y: auto;
-            }
-
-            .nav-links > li {
-                width: 100%;
-                margin: 0;
-                border-bottom: 1px solid #f5f5f5;
-            }
-
-            .nav-links a {
-                padding: 15px 25px;
-                width: 100%;
-            }
-
+            #nav-check:checked ~ .nav-links { max-height: 80vh; overflow-y: auto; }
+            .nav-links > li { width: 100%; margin: 0; border-bottom: 1px solid #f5f5f5; }
+            .nav-links a { padding: 15px 25px; width: 100%; }
             .dropdown-menu, .sub-dropdown-menu {
                 position: static;
                 width: 100%;
@@ -473,38 +397,25 @@
                 padding-left: 20px;
                 opacity: 1;
                 transform: none;
-                display: block; /* Expand layout visually natively in mobile view */
+                display: block;
             }
-
             .arrow { display: none; }
-
-            /* Product Page Layout Flip for Mobile Devices */
-            .product-wrapper {
-                grid-template-columns: 1fr;
-                gap: 30px;
-                padding: 20px;
-            }
-
-            .product-info-block {
-                padding-right: 0;
-            }
-
-            .main-product-title {
-                font-size: 28px;
-            }
+            .product-wrapper { grid-template-columns: 1fr; gap: 30px; padding: 20px; }
+            .product-info-block { padding-right: 0; }
+            .main-product-title { font-size: 28px; }
+            .contact-info { gap: 25px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Main Dynamic Navigation Bar -->
+    <!-- Unified Navigation Bar -->
     <nav class="navbar">
-        <div class="logo">
-            <img src="logo.png  " alt="Dhaga piroi Logo">
+        <div class="logo" onclick="window.location.href='index.html'">
+            <img src="logo.png" alt="Dhaga piroi Logo">
             <span class="brand-name">Dhaga piroi</span>
         </div>
 
-        <!-- CSS Only Hack Interface Trigger -->
         <input type="checkbox" id="nav-check">
         <label for="nav-check" class="hamburger">
             <span></span>
@@ -512,80 +423,72 @@
             <span></span>
         </label>
 
-        <!-- Navbar Menu Structure -->
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
-            
-            <!-- Category Core Sub-Sections Tree -->
             <li>
-                <a href="#">Categories ▾</a>
+                <a href="categories.html">Categories ▾</a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">Necklace</a></li>
-                    <li><a href="#">Sets</a></li>
-                    <li><a href="#">Earrings</a></li>
-                    <li><a href="#">Key Chain</a></li>
-                    <li><a href="#">Hampers</a></li>
+                    <li><a href="categories.html?category=Necklace">Necklace</a></li>
+                    <li><a href="categories.html?category=Sets">Sets</a></li>
+                    <li><a href="categories.html?category=Earrings">Earrings</a></li>
+                    <li><a href="categories.html?category=Key Chain">Key Chain</a></li>
+                    <li><a href="categories.html?category=Hampers">Hampers</a></li>
                     <li>
-                        <a href="#">Charms <span class="arrow">▶</span></a>
+                        <a href="categories.html?category=Charms">Charms <span class="arrow">▶</span></a>
                         <ul class="sub-dropdown-menu">
-                            <li><a href="#">Bag Charms</a></li>
-                            <li><a href="#">Phone Charms</a></li>
+                            <li><a href="categories.html?category=Bag Charms">Bag Charms</a></li>
+                            <li><a href="categories.html?category=Phone Charms">Phone Charms</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#">Hair Accessories <span class="arrow">▶</span></a>
+                        <a href="categories.html?category=Hair Accessories">Hair Accessories <span class="arrow">▶</span></a>
                         <ul class="sub-dropdown-menu">
-                            <li><a href="#">Hair Claws</a></li>
-                            <li><a href="#">Hair Gajra</a></li>
-                            <li><a href="#">Prandi</a></li>
-                            <li><a href="#">Scrunchies</a></li>
+                            <li><a href="categories.html?category=Hair Claws">Hair Claws</a></li>
+                            <li><a href="categories.html?category=Hair Gajra">Hair Gajra</a></li>
+                            <li><a href="categories.html?category=Prandi">Prandi</a></li>
+                            <li><a href="categories.html?category=Scrunchies">Scrunchies</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#">Kids <span class="arrow">▶</span></a>
+                        <a href="categories.html?category=Kids">Kids <span class="arrow">▶</span></a>
                         <ul class="sub-dropdown-menu">
-                            <li><a href="#">Hand Pocha</a></li>
-                            <li><a href="#">Necklace</a></li>
-                            <li><a href="#">Coller Necklace</a></li>
-                            <li><a href="#">Hair Band</a></li>
-                            <li><a href="#">Hair Pin</a></li>
+                            <li><a href="categories.html?category=Hand Pocha">Hand Pocha</a></li>
+                            <li><a href="categories.html?category=Necklace">Necklace</a></li>
+                            <li><a href="categories.html?category=Coller Necklace">Coller Necklace</a></li>
+                            <li><a href="categories.html?category=Hair Band">Hair Band</a></li>
+                            <li><a href="categories.html?category=Hair Pin">Hair Pin</a></li>
                         </ul>
                     </li>
                 </ul>
             </li>
-
-            <!-- Specials Core Sub-Sections Tree -->
             <li>
-                <a href="#">Specials ▾</a>
+             <a href="#">Specials ▾</a>
                 <ul class="dropdown-menu">
                     <li>
                         <a href="#">Seasonal <span class="arrow">▶</span></a>
                         <ul class="sub-dropdown-menu">
-                            <li><a href="#">Christmas</a></li>
-                            <li><a href="#">New Year</a></li>
-                            <li><a href="#">Rakhi Special</a></li>
-                            <li><a href="#">Navratri</a></li>
+                            <li><a href="categories.html?category=Christmas">Christmas</a></li>
+                            <li><a href="categories.html?category=New Year">New Year</a></li>
+                            <li><a href="categories.html?category=Rakhi Special">Rakhi Special</a></li>
+                            <li><a href="categories.html?category=Navratri">Navratri</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="#">Gifts <span class="arrow">▶</span></a>
                         <ul class="sub-dropdown-menu">
-                            <li><a href="#">Under 500</a></li>
-                            <li><a href="#">Under 1000</a></li>
-                            <li><a href="#">Under 2000</a></li>
-                            <li><a href="#">Friendship Day</a></li>
-                            <li><a href="#">Valentines Mini</a></li>
-                            <li><a href="#">Bouquets</a></li>
+                            <li><a href="categories.html?category=Under 500">Under 500</a></li>
+                            <li><a href="categories.html?category=Under 1000">Under 1000</a></li>
+                            <li><a href="categories.html?category=Under 2000">Under 2000</a></li>
+                            <li><a href="categories.html?category=Friendship Day">Friendship Day</a></li>
+                            <li><a href="categories.html?category=Valentines Mini">Valentine's Mini</a></li>
+                            <li><a href="categories.html?category=Bouquets">Bouquets</a></li>
                         </ul>
                     </li>
                 </ul>
             </li>
-
             <li><a href="#">About</a></li>
-            
-            <!-- Functional Shopping Cart Icon Component -->
             <li>
-                <a href="#" class="cart-icon">
+                <a href="#" class="cart-icon" style="padding: 10px 20px;">
                     <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="9" cy="21" r="1"></circle>
                         <circle cx="20" cy="21" r="1"></circle>
@@ -599,40 +502,127 @@
 
     <!-- Product Detail Container Section -->
     <main class="product-container">
-        <div class="product-wrapper">
-            
-            <!-- Left Grid: Styled Image Area -->
-            <div class="product-image-block">
-                <img src="https://placehold.co/600x600/fcf1h3/d45d79?text=Kids+Necklace" alt="Kids Flower Necklace Image" class="main-display-img">
-            </div>
-
-            <!-- Right Grid: Information Area -->
-            <div class="product-info-block">
-                <span class="product-meta-tag">Handmade Craft</span>
-                <h1 class="main-product-title">Kids Flower Necklace</h1>
-                <div class="main-product-price">₹ 499.00</div>
-                
-                <p class="product-description-text">
-                    Soft crochet necklace specially designed for kids. Made with high-quality comfortable threads, skin-friendly materials, and woven beautifully with vibrant floral pattern accents.
-                </p>
-
-                <!-- Quantity Control Element Setup -->
-                <div class="quantity-selector-section">
-                    <span class="quantity-label">Quantity:</span>
-                    <input type="number" class="quantity-input-field" value="1" min="1">
-                </div>
-
-                <!-- Hover Activated Dynamic Highlight Component Base -->
-                <div class="action-button-wrapper">
-                    <button class="add-to-cart-action-btn">
-                        <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                        Add to Cart
-                    </button>
-                </div>
-            </div>
-
+        <!-- This wrapper is empty by default. JavaScript will fetch data and inject HTML here. -->
+        <div class="product-wrapper" id="dynamic-product-wrapper">
+            <h2 style="text-align: center; width: 100%; color: #888; grid-column: 1 / -1; padding: 40px 0;">Loading Product Details...</h2>
         </div>
     </main>
 
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-container">
+            <ul class="contact-info">
+                <li>
+                    <a href="https://www.instagram.com/dhagapiroi/" target="_blank" title="Instagram">
+                        <svg class="contact-icon" viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="tel:+919876543210" title="Call Us">
+                        <svg class="contact-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="mailto:info@dhagapiroi.com" title="Email Us">
+                        <svg class="contact-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://maps.google.com/?q=Ahmedabad,+Gujarat" target="_blank" title="Location">
+                        <svg class="contact-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Dhaga piroi. All rights reserved. | Designed for Quality.</p>
+        </div>
+    </footer>
+
+    <!-- Supabase Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Dynamic Fetch Script -->
+    <script>
+        const SUPABASE_URL = 'https://aybzziayodaybspnuxos.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable__YSi8eCD5W3QW1XN9uE08g_U8VHT3Ik';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        async function fetchProductDetails() {
+            // 1. Parse the URL to find out which item to load and from which table
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            const sourceTable = urlParams.get('source'); // Determines 'products' vs 'categories' table
+            
+            const wrapper = document.getElementById('dynamic-product-wrapper');
+
+            // Prevent fetching if no ID is present in the URL
+            if (!productId) {
+                wrapper.innerHTML = "<h1 style='grid-column: 1/-1; text-align: center; color: #555;'>Product not found in URL!</h1>";
+                return;
+            }
+
+            // Fallback to 'products' table if the source is missing from the URL
+            const targetTable = sourceTable ? sourceTable : 'products';
+
+            try {
+                // 2. Fetch specific item based on table and ID
+                let { data: product, error } = await supabaseClient
+                    .from(targetTable)
+                    .select('*')
+                    .eq('id', productId)
+                    .single(); 
+
+                if (error) throw error;
+
+                // 3. Determine category tag text
+                // Uses category_name from categories table, or falls back to 'Featured Item'
+                let categoryTagText = "Featured Item";
+                if (targetTable === 'categories' && product.category_name) {
+                    categoryTagText = product.category_name;
+                }
+
+                // Update the browser tab title
+                document.title = `${product.name} - Dhaga piroi`;
+
+                // 4. Inject the Database information dynamically into the DOM
+                wrapper.innerHTML = `
+                    <div class="product-image-block">
+                        <img src="${product.image_url}" alt="${product.name}" class="main-display-img">
+                    </div>
+
+                    <div class="product-info-block">
+                        <span class="product-meta-tag">${categoryTagText}</span>
+                        <h1 class="main-product-title">${product.name}</h1>
+                        <div class="main-product-price">₹ ${product.price}</div>
+                        
+                        <p class="product-description-text">${product.description || 'A beautiful handcrafted item carefully made with love and dedication.'}</p>
+
+                        <div class="quantity-selector-section">
+                            <span class="quantity-label">Quantity:</span>
+                            <input type="number" class="quantity-input-field" value="1" min="1" id="product-quantity">
+                        </div>
+
+                        <div class="action-button-wrapper">
+                            <!-- Naya button yahan -->
+                            <button class="add-to-cart-action-btn" onclick="addToCart({id: ${product.id}, name: '${product.name}', price: ${product.price}}, 'product-quantity')">
+                                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+            } catch (err) {
+                console.error("System Error: ", err);
+                wrapper.innerHTML = `<h1 style='grid-column: 1/-1; text-align: center; color: #d45d79;'>Unable to load product. Please try again later.</h1>`;
+            }
+        }
+
+        // 5. Initialize fetch script immediately
+        fetchProductDetails();
+    </script>
+
+    <script src="cart.js"></script>
 </body>
 </html>

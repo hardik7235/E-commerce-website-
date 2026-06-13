@@ -319,10 +319,35 @@
             margin: 0 auto;
         }
 
+         /* Desktop: 4 per row (Default) */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1250px;
+            margin: 0 auto;
+        }
+
+        /* Tablet: 3 per row */
+        @media (max-width: 1024px) {
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Mobile: 2 per row */
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                padding: 0 15px;
+            }
+        }
+
         /* ----- DYNAMIC PRODUCT CARDS ----- */
         .product-card {
             background: #ffffff;
-            border-radius: 12px;
+            border-radius: 12px;    
             padding-bottom: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.04);
             transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -504,6 +529,8 @@
             .product-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; } 
             .contact-info { gap: 25px; }
         }
+
+       
     </style>
 </head>
 <body>
@@ -522,65 +549,66 @@
             <span></span>
         </label>
 
+        <!-- Top Right: Navigation Menu -->
         <ul class="nav-links">
-            <li><a href="#">Home</a></li>
+            <li><a href="index.html">Home</a></li>
             <li>
-                <a href="#">Categories ▾</a>
+                <a href="categories.html">Categories ▾</a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">Necklace</a></li>
-                    <li><a href="#">Sets</a></li>
-                    <li><a href="#">Earrings</a></li>
-                    <li><a href="#">Key Chain</a></li>
-                    <li><a href="#">Hampers</a></li>
+                    <li><a href="categories.html?category=Necklace">Necklace</a></li>
+                    <li><a href="categories.html?category=Sets">Sets</a></li>
+                    <li><a href="categories.html?category=Earrings">Earrings</a></li>
+                    <li><a href="categories.html?category=Key Chain">Key Chain</a></li>
+                    <li><a href="categories.html?category=Hampers">Hampers</a></li>
                     <li>
-                        <a href="#">Charms <span class="arrow">▶</span></a>
+                        <a href="categories.html?category=Charms">Charms <span class="arrow">▶</span></a>
                         <ul class="sub-dropdown-menu">
-                            <li><a href="#">Bag Charms</a></li>
-                            <li><a href="#">Phone Charms</a></li>
+                            <li><a href="categories.html?category=Bag Charms">Bag Charms</a></li>
+                            <li><a href="categories.html?category=Phone Charms">Phone Charms</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#">Hair Accessories <span class="arrow">▶</span></a>
+                        <a href="categories.html?category=Hair Accessories">Hair Accessories <span class="arrow">▶</span></a>
                         <ul class="sub-dropdown-menu">
-                            <li><a href="#">Hair Claws</a></li>
-                            <li><a href="#">Hair Gajra</a></li>
-                            <li><a href="#">Prandi</a></li>
-                            <li><a href="#">Scrunchies</a></li>
+                            <li><a href="categories.html?category=Hair Claws">Hair Claws</a></li>
+                            <li><a href="categories.html?category=Hair Gajra">Hair Gajra</a></li>
+                            <li><a href="categories.html?category=Prandi">Prandi</a></li>
+                            <li><a href="categories.html?category=Scrunchies">Scrunchies</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#">Kids <span class="arrow">▶</span></a>
+                        <a href="categories.html?category=Kids">Kids <span class="arrow">▶</span></a>
                         <ul class="sub-dropdown-menu">
-                            <li><a href="#">Hand Pocha</a></li>
-                            <li><a href="#">Necklace</a></li>
-                            <li><a href="#">Coller Necklace</a></li>
-                            <li><a href="#">Hair Band</a></li>
-                            <li><a href="#">Hair Pin</a></li>
+                            <li><a href="categories.html?category=Hand Pocha">Hand Pocha</a></li>
+                            <li><a href="categories.html?category=Necklace">Necklace</a></li>
+                            <li><a href="categories.html?category=Coller Necklace">Coller Necklace</a></li>
+                            <li><a href="categories.html?category=Hair Band">Hair Band</a></li>
+                            <li><a href="categories.html?category=Hair Pin">Hair Pin</a></li>
                         </ul>
                     </li>
                 </ul>
             </li>
-            <li>
+          <li>
                 <a href="#">Specials ▾</a>
                 <ul class="dropdown-menu">
                     <li>
                         <a href="#">Seasonal <span class="arrow">▶</span></a>
                         <ul class="sub-dropdown-menu">
-                            <li><a href="#">Christmas</a></li>
-                            <li><a href="#">New Year</a></li>
-                            <li><a href="#">Rakhi Special</a></li>
-                            <li><a href="#">Navratri</a></li>
+                            <li><a href="categories.html?category=Christmas">Christmas</a></li>
+                            <li><a href="categories.html?category=New Year">New Year</a></li>
+                            <li><a href="categories.html?category=Rakhi Special">Rakhi Special</a></li>
+                            <li><a href="categories.html?category=Navratri">Navratri</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="#">Gifts <span class="arrow">▶</span></a>
                         <ul class="sub-dropdown-menu">
-                            <li><a href="#">Under 500</a></li>
-                            <li><a href="#">Under 1000</a></li>
-                            <li><a href="#">Under 2000</a></li>
-                            <li><a href="#">Friendship Day</a></li>
-                            <li><a href="#">Valentines Mini</a></li>
-                            <li><a href="#">Bouquets</a></li>
+                            <li><a href="categories.html?category=Under 500">Under 500</a></li>
+                            <li><a href="categories.html?category=Under 1000">Under 1000</a></li>
+                            <li><a href="categories.html?category=Under 2000">Under 2000</a></li>
+                            <li><a href="categories.html?category=Friendship Day">Friendship Day</a></li>
+                            <li><a href="categories.html?category=Valentines Mini">Valentine's Mini</a></li>
+                            <li><a href="categories.html?category=Bouquets">Bouquets</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -646,6 +674,21 @@
         </div>
     </footer>
 
+     <!-- Add this before the closing </body> tag in index.html -->
+    <div id="receipt-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; padding:20px; overflow-y:auto;">
+        <div id="receipt-content" style="background:#fff; width:100%; max-width:400px; margin:50px auto; padding:20px; border-radius:10px;">
+            <h2 style="text-align:center; color:#d45d79;">Dhaga Piroi Bill Receipt</h2>
+            <hr style="margin: 10px 0;">
+            <div id="receipt-items" style="margin-bottom: 15px;"></div>
+            <hr style="margin: 10px 0;">
+            <p style="font-size: 18px;"><strong>Total: <span id="total-amount"></span></strong></p>
+            
+            <button onclick="downloadPDF()" style="width:100%; padding:12px; background:#d45d79; color:#fff; border:none; margin-top:20px; cursor:pointer; border-radius:5px;">Download PDF</button>
+            <button onclick="document.getElementById('receipt-modal').style.display='none'" style="width:100%; padding:10px; margin-top:10px; cursor:pointer; background:#f0f0f0; border:none; border-radius:5px;">Close</button>
+        </div>
+    </div>
+
+  
     <!-- ============================================== -->
     <!-- SCRIPTS SECTION (Keep all scripts at the end)  -->
     <!-- ============================================== -->
@@ -665,6 +708,8 @@
 
     <!-- 3. Your App Logic for rendering cards -->
     <script src="app.js"></script>
+
+    <script src="cart.js"></script>
 
 </body>
 </html>

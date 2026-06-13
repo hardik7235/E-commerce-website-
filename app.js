@@ -12,7 +12,7 @@ async function fetchAndDisplayProducts() {
     const container = document.getElementById('product-container');
 
     try {
-        // Fetch all data from the 'products' table in the database
+        // Fetch data from the 'products' table (Sirf 8 Featured items)
         let { data: products, error } = await supabaseClient
             .from('products')
             .select('*');
@@ -23,39 +23,32 @@ async function fetchAndDisplayProducts() {
             return;
         }
 
-        // Clear the 'Loading...' text once the data is received (empty the div)
+        // Clear the 'Loading...' text once the data is received
         container.innerHTML = '';
 
         // 4. forEach loop: This code will run for every single product
         products.forEach(product => {
-            
-            // Write the HTML structure inside backticks (`)
-            // Use ${variable} to inject database data into the HTML
-            const cardHTML = `
-                <a href="product.html?id=${product.id}" class="product-card" style="text-decoration: none; color: inherit; cursor: pointer;">
-                    
-                    <div class="img-container">
-                        <img src="${product.image_url}" alt="${product.name}" class="product-img">
-                    </div>
-                    
-                    <div class="product-info">
-                        <h3 class="product-title">${product.name}</h3>
-                        <span class="product-price">₹ ${product.price}</span>
-                        
-                        <button class="add-to-cart-btn">
-                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                                <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
-                            </svg> 
-                            Add to Cart
-                        </button>
-                    </div>
-                    
-                </a>
-            `;
-
-            // += means append each new card after the previous ones
-            container.innerHTML += cardHTML;
-        });
+    // Ye raha naya button code
+    const cardHTML = `
+        <a href="product-details.html?id=${product.id}&source=products" class="product-card" style="text-decoration: none; color: inherit; cursor: pointer;">
+            <div class="img-container">
+                <img src="${product.image_url}" alt="${product.name}" class="product-img">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">${product.name}</h3>
+                <span class="product-price">₹ ${product.price}</span>
+                
+                <button class="add-to-cart-btn" onclick="event.preventDefault(); addToCart({id: ${product.id}, name: '${product.name}', price: ${product.price}})">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                    </svg> 
+                    Add to Cart
+                </button>
+            </div>
+        </a>
+    `;
+    container.innerHTML += cardHTML;
+});
 
     } catch (err) {
         console.error("System error: ", err);
