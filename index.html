@@ -344,6 +344,20 @@
             }
         }
 
+        /* Mobile view 2-column grid */
+        @media (max-width: 768px) {
+            .product-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr; /* Ye line 2 columns karti hai */
+                gap: 10px; /* Cards ke beech ki jagah */
+                padding: 10px;
+            }
+            
+            /* */
+            .product-card {
+                width: 100%;
+            }
+        }
         /* ----- DYNAMIC PRODUCT CARDS ----- */
         .product-card {
             background: #ffffff;
@@ -674,20 +688,23 @@
         </div>
     </footer>
 
-     <!-- Add this before the closing </body> tag in index.html -->
-    <div id="receipt-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; padding:20px; overflow-y:auto;">
-        <div id="receipt-content" style="background:#fff; width:100%; max-width:400px; margin:50px auto; padding:20px; border-radius:10px;">
-            <h2 style="text-align:center; color:#d45d79;">Dhaga Piroi Bill Receipt</h2>
-            <hr style="margin: 10px 0;">
-            <div id="receipt-items" style="margin-bottom: 15px;"></div>
-            <hr style="margin: 10px 0;">
-            <p style="font-size: 18px;"><strong>Total: <span id="total-amount"></span></strong></p>
-            
-            <button onclick="downloadPDF()" style="width:100%; padding:12px; background:#d45d79; color:#fff; border:none; margin-top:20px; cursor:pointer; border-radius:5px;">Download PDF</button>
-            <button onclick="document.getElementById('receipt-modal').style.display='none'" style="width:100%; padding:10px; margin-top:10px; cursor:pointer; background:#f0f0f0; border:none; border-radius:5px;">Close</button>
+    <!-- Receipt Modal HTML Structure -->
+        <div id="receipt-modal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); width:90%; max-width:400px; background:white; padding:20px; border-radius:10px; box-shadow:0 0 20px rgba(0,0,0,0.3); z-index:10000;">
+            <h2 style="margin-bottom:15px;">Your Bill</h2>
+            <div id="receipt-items"></div>
+            <hr style="margin:10px 0;">
+            <p style="font-size:18px; font-weight:bold;">Total: <span id="total-amount"></span></p>
+            <div style="margin-top:20px; display:flex; gap:10px;">
+                <button onclick="document.getElementById('receipt-modal').style.display='none'" style="flex:1; padding:10px;">Close</button>
+                <button onclick="downloadPDF()" style="flex:1; padding:10px; background:#d45d79; color:white; border:none;">Download PDF</button>
+            </div>
         </div>
-    </div>
 
+        <!-- Receipt Content for PDF -->
+        <div id="receipt-content" style="display:none;">
+            <h1>Dhaga Piroi Bill</h1>
+            <div id="receipt-items-pdf"></div>
+        </div>
   
     <!-- ============================================== -->
     <!-- SCRIPTS SECTION (Keep all scripts at the end)  -->

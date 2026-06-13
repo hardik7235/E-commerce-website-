@@ -51,11 +51,17 @@ function showCartModal() {
             const itemTotal = item.price * item.quantity;
             total += itemTotal;
             html += `
-                <div style="display:flex; justify-content:space-between; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
-                    <div><strong>${item.name}</strong><br>₹${item.price} x ${item.quantity}</div>
-                    <div>₹${itemTotal} <button onclick="removeItem(${index})" style="color:red; border:none; cursor:pointer; margin-left:10px;">Remove</button></div>
+            <div style="display:flex; flex-direction: column; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
+                <div style="display: flex; justify-content: space-between; width: 100%;">
+                    <strong>${item.name}</strong> 
+                    <span>₹${item.price} x ${item.quantity}</span>
                 </div>
-            `;
+                <div style="align-self: flex-end; margin-top: 5px;">
+                    ₹${itemTotal} 
+                    <button onclick="removeItem(${index})" style="color:red; border:none; cursor:pointer; margin-left:10px;">Remove</button>
+                </div>
+            </div>
+`;
         });
         html += `
             <div style="margin-top:20px; font-size:18px;"><strong>Total: ₹${total}</strong></div>

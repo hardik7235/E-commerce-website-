@@ -139,6 +139,23 @@
                 padding: 0 15px;
             }
         }
+
+          /* Mobile view 2-column grid */
+        @media (max-width: 768px) {
+            .product-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr; /* Ye line 2 columns karti hai */
+                gap: 10px; /* Cards ke beech ki jagah */
+                padding: 10px;
+            }
+            
+            /* */
+            .product-card {
+                width: 100%;
+            }
+        }
+
+        
         .product-card {
             background: #ffffff;
             border-radius: 12px;
