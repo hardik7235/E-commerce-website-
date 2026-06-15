@@ -79,7 +79,7 @@
         .category-header {
             text-align: center;
             padding: 60px 20px 60px;
-            background-color: #fff0f3; /* Soft pink background matching the screenshot */
+            background-color: #fff0f3;
             border-bottom: 1px solid #f0e4e6;
             margin-bottom: 40px;
             width: 100vw;
@@ -93,18 +93,17 @@
         .category-header h1 {
             font-size: 42px;
             font-family: 'Georgia', serif;
-            color: #d45d79; /* Brand pink text color matching the screenshot */
+            color: #d45d79;
             margin-bottom: 15px;
             position: relative;
         }
 
-        /* Removing the underline as per the new design */
-        
         .category-header p {
             color: #666;
             font-size: 16px;
         }
 
+        /* Desktop Layout: 4 items per row (Default) */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -115,47 +114,7 @@
             flex-grow: 1;
         }
 
-       /* Desktop: 4 per row (Default) */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-            max-width: 1250px;
-            margin: 0 auto;
-        }
-
-        /* Tablet: 3 per row */
-        @media (max-width: 1024px) {
-            .product-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        /* Mobile: 2 per row */
-        @media (max-width: 768px) {
-            .product-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-                padding: 0 15px;
-            }
-        }
-
-          /* Mobile view 2-column grid */
-        @media (max-width: 768px) {
-            .product-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr; /* Ye line 2 columns karti hai */
-                gap: 10px; /* Cards ke beech ki jagah */
-                padding: 10px;
-            }
-            
-            /* */
-            .product-card {
-                width: 100%;
-            }
-        }
-
-        
+        /* Product Card Styling */
         .product-card {
             background: #ffffff;
             border-radius: 12px;
@@ -171,6 +130,7 @@
             cursor: pointer; 
             overflow: hidden;
             height: 100%;
+            width: 100%;
         }
 
         .product-card:hover {
@@ -224,6 +184,7 @@
             margin-bottom: 20px; 
         }
 
+        /* Action Buttons */
         .add-to-cart-btn {
             width: 100%; padding: 12px; background-color: #222222; color: #ffffff;
             border: none; border-radius: 6px; font-size: 14px; font-weight: bold;
@@ -287,12 +248,14 @@
 
         @keyframes fadeInRight { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
 
+        /* Tablet Layout: 2 items per row */
         @media (max-width: 1024px) {
             .navbar { padding: 15px 25px; }
-            .product-grid { grid-template-columns: repeat(3, 1fr); gap: 30px; padding: 0 25px 50px; }
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; padding: 0 25px 50px; }
             .category-header h1 { font-size: 36px; }
         }
 
+        /* Mobile Layout: 1 item per row */
         @media (max-width: 768px) {
             .hamburger { display: flex; }
             .nav-links {
@@ -306,16 +269,12 @@
             .dropdown-menu, .sub-dropdown-menu { position: static; width: 100%; box-shadow: none; background-color: #fdfafb; padding-left: 20px; opacity: 1; transform: none; display: block; }
             .arrow { display: none; }
             
-            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 0 15px 40px; }
+            /* Enforce 1 item per row precisely on mobile */
+            .product-grid { grid-template-columns: 1fr; gap: 20px; padding: 0 15px 40px; }
+            
             .category-header h1 { font-size: 30px; }
             .contact-info { gap: 25px; }
         }
-
-        @media (max-width: 480px) {
-            .product-grid { grid-template-columns: 1fr; }
-        }
-
-
     </style>
 </head>
 <body>
@@ -457,9 +416,31 @@
         </div>
     </footer>
 
-   
-    <!-- Supabase Library -->
+    <!-- ============================================== -->
+    <!-- MODALS AND DRAWERS                             -->
+    <!-- ============================================== -->
+    
+    <!-- Receipt Modal (Must exist on every page where checkout happens) -->
+    <div id="receipt-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; padding:20px; overflow-y:auto;">
+        <div id="receipt-content" style="background:#fff; width:100%; max-width:400px; margin:50px auto; padding:20px; border-radius:10px;">
+            <h2 style="text-align:center; color:#d45d79;">Dhaga Piroi Receipt</h2>
+            <hr style="margin: 10px 0;">
+            <div id="receipt-items" style="margin-bottom: 15px;"></div>
+            <hr style="margin: 10px 0;">
+            <p style="font-size: 18px;"><strong>Total: <span id="total-amount"></span></strong></p>
+            
+            <button onclick="downloadPDF()" style="width:100%; padding:12px; background:#d45d79; color:#fff; border:none; margin-top:20px; cursor:pointer; border-radius:5px;">Download PDF</button>
+            <button onclick="document.getElementById('receipt-modal').style.display='none'" style="width:100%; padding:10px; margin-top:10px; cursor:pointer; background:#f0f0f0; border:none; border-radius:5px;">Close</button>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- SCRIPTS SECTION                                -->
+    <!-- ============================================== -->
+
+    <!-- Libraries: Supabase and HTML2PDF -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <!-- Custom Toast Notification Logic -->
     <script>
@@ -566,12 +547,18 @@
                                 <h3 class="product-title">${product.name}</h3>
                                 <span class="product-price">₹ ${product.price}</span>
                                 
-                                <button class="add-to-cart-btn" onclick="event.preventDefault(); addToCart({id: ${product.id}, name: '${product.name}', price: ${product.price}})">
-                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
-                                    </svg> 
-                                    Add to Cart
-                                </button>
+                              <button class="add-to-cart-btn" onclick="event.preventDefault(); addToCart({
+                                id: ${product.id}, 
+                                name: '${product.name.replace(/'/g, "\\'")}', 
+                                price: ${product.price}, 
+                                image_url: '${product.image_url}', 
+                                description: '${(product.description || '').replace(/'/g, "\\'")}'
+                            })">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right:5px;">
+                                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                                </svg> 
+                                Add to Cart
+                            </button>
                             </div>
                         </a>
                     `;
@@ -592,6 +579,7 @@
         loadCategoryProducts();
     </script>
 
+    <!-- Connects to your external cart management logic -->
     <script src="cart.js"></script>
 </body>
 </html>

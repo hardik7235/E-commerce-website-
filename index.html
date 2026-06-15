@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dhaga Piroi - Home</title>
     <style>
-        /* Base Reset */
         * {
             margin: 0;
             padding: 0;
@@ -17,9 +16,11 @@
         body {
             background-color: #f8f9fa;
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* Top Navigation Bar */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -43,6 +44,11 @@
             align-items: center;
             gap: 15px;
             cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.03);
         }
 
         .logo img {
@@ -86,7 +92,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Right Side: Navigation Links */
         .nav-links {
             list-style: none;
             display: flex;
@@ -110,7 +115,6 @@
             position: relative;
         }
 
-        /* Link Underline Animation */
         .nav-links > li > a::after {
             content: '';
             position: absolute;
@@ -123,13 +127,8 @@
             transition: width 0.3s ease;
         }
 
-        .nav-links > li > a:hover {
-            color: #d45d79;
-        }
-
-        .nav-links > li > a:hover::after {
-            width: 70%;
-        }
+        .nav-links > li > a:hover { color: #d45d79; }
+        .nav-links > li > a:hover::after { width: 70%; }
 
         /* First Level Dropdown Menus */
         .dropdown-menu {
@@ -148,11 +147,7 @@
             z-index: 1000;
         }
 
-        .dropdown-menu li {
-            position: relative;
-            border-bottom: 1px solid #eee;
-        }
-
+        .dropdown-menu li { position: relative; border-bottom: 1px solid #eee; }
         .dropdown-menu li:last-child { border-bottom: none; }
 
         .dropdown-menu a {
@@ -185,19 +180,11 @@
             border-radius: 0 5px 5px 5px;
         }
 
-        /* Hover Triggers */
-        .nav-links li:hover > .dropdown-menu { 
-            visibility: visible;
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .dropdown-menu li:hover > .sub-dropdown-menu { 
-            visibility: visible;
-            opacity: 1;
-            transform: translateX(0);
-        }
+        .nav-links li:hover > .dropdown-menu { visibility: visible; opacity: 1; transform: translateY(0); }
+        .dropdown-menu li:hover > .sub-dropdown-menu { visibility: visible; opacity: 1; transform: translateX(0); }
 
-        /* Cart Icon */
+        .arrow { font-size: 12px; color: #888; }
+
         .cart-icon {
             display: flex;
             align-items: center;
@@ -205,9 +192,7 @@
             transition: transform 0.3s ease;
         }
         
-        .cart-icon:hover {
-            transform: translateY(-3px); 
-        }
+        .cart-icon:hover { transform: translateY(-3px); }
 
         .cart-icon svg {
             width: 24px;
@@ -235,9 +220,6 @@
             align-items: center;
         }
 
-        .arrow { font-size: 12px; color: #888; }
-
-        /* Hero Section */
         .hero-section {
             text-align: center;
             padding: 120px 20px;
@@ -289,7 +271,6 @@
             transform: translateY(-3px);
         }
 
-        /* Featured Section */
         .featured-items-section { padding: 80px 50px; background-color: #ffffff; }
 
         .section-title {
@@ -311,57 +292,37 @@
             border-radius: 2px;
         }
 
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px;
-            max-width: 1250px;
-            margin: 0 auto;
-        }
-
-         /* Desktop: 4 per row (Default) */
+        /* Responsive Grid Configuration */
+        /* Desktop Layout: 4 items per row */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 30px;
             max-width: 1250px;
             margin: 0 auto;
+            padding: 0 20px;
         }
 
-        /* Tablet: 3 per row */
+        /* Tablet Layout: 2 items per row */
         @media (max-width: 1024px) {
             .product-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
             }
         }
 
-        /* Mobile: 2 per row */
+        /* Mobile Layout: 1 item per row */
         @media (max-width: 768px) {
             .product-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
+                grid-template-columns: 1fr;
+                gap: 20px;
                 padding: 0 15px;
             }
         }
 
-        /* Mobile view 2-column grid */
-        @media (max-width: 768px) {
-            .product-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr; /* Ye line 2 columns karti hai */
-                gap: 10px; /* Cards ke beech ki jagah */
-                padding: 10px;
-            }
-            
-            /* */
-            .product-card {
-                width: 100%;
-            }
-        }
-        /* ----- DYNAMIC PRODUCT CARDS ----- */
         .product-card {
             background: #ffffff;
-            border-radius: 12px;    
+            border-radius: 12px;
             padding-bottom: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.04);
             transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -376,6 +337,9 @@
             color: inherit;        
             cursor: pointer; 
             overflow: hidden;
+            width: 100%;
+            max-width: 450px; /* Optional cap so single columns don't stretch too wide on iPads */
+            margin: 0 auto;
         }
 
         .product-card:hover {
@@ -403,6 +367,7 @@
             opacity: 0;
             transition: opacity 0.5s ease;
         }
+        
         .product-card:hover .img-container::after { opacity: 1; }
 
         .product-img { 
@@ -412,9 +377,7 @@
             transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); 
         }
         
-        .product-card:hover .product-img { 
-            transform: scale(1.08); 
-        }
+        .product-card:hover .product-img { transform: scale(1.08); }
 
         .product-info { 
             width: 100%; 
@@ -458,13 +421,9 @@
         
         .add-to-cart-btn:hover { background-color: #d45d79; }
         .add-to-cart-btn:active { transform: scale(0.95); }
-        
-        .add-to-cart-btn svg { 
-            width: 18px; height: 18px; fill: currentColor; 
-        }
+        .add-to-cart-btn svg { width: 18px; height: 18px; fill: currentColor; }
 
-        /* Footer */
-        .footer { background-color: #1a1a1a; color: #f8f9fa; padding: 70px 0 20px; margin-top: 50px; }
+        .footer { background-color: #1a1a1a; color: #f8f9fa; padding: 70px 0 20px; margin-top: auto; }
         .footer-container { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; padding: 0 20px; margin-bottom: 40px; }
         
         .contact-info { list-style: none; display: flex; justify-content: center; gap: 40px; margin: 0 auto; }
@@ -478,17 +437,14 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive Design */
         @media (max-width: 1024px) {
             .navbar { padding: 15px 20px; }
             .nav-links > li { margin-left: 15px; }
             .hero-section h1 { font-size: 42px; }
             .featured-items-section { padding: 60px 20px; }
-            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
         }
 
         @media (max-width: 768px) {
-            .navbar { padding: 15px 20px; }
             .hamburger { display: flex; } 
             
             .nav-links {
@@ -532,26 +488,20 @@
             }
 
             .dropdown-menu a:hover { padding-left: 20px; } 
-
             .nav-links li:hover > .dropdown-menu { display: block; }
             .dropdown-menu li:hover > .sub-dropdown-menu { display: block; }
 
             .hero-section h1 { font-size: 32px; }
             .hero-section p { font-size: 16px; }
-
             .section-title { font-size: 28px; }
-            .product-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; } 
             .contact-info { gap: 25px; }
         }
-
-       
     </style>
 </head>
 <body>
 
-    <!-- Main Navigation Bar -->
     <nav class="navbar">
-        <div class="logo">
+        <div class="logo" onclick="window.location.href='index.html'">
             <img src="logo.png" alt="Dhaga Piroi Logo">
             <span class="brand-name">Dhaga piroi</span>
         </div>
@@ -563,7 +513,7 @@
             <span></span>
         </label>
 
-        <!-- Top Right: Navigation Menu -->
+        <!-- Top Right Navigation Menu -->
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li>
@@ -602,7 +552,7 @@
                     </li>
                 </ul>
             </li>
-          <li>
+            <li>
                 <a href="#">Specials ▾</a>
                 <ul class="dropdown-menu">
                     <li>
@@ -629,26 +579,27 @@
             </li>
             <li><a href="#">About</a></li>
             <li>
+                <!-- Cart Icon configured to integrate with cart.js logic -->
                 <a href="#" class="cart-icon" style="padding: 10px 20px;">
                     <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="9" cy="21" r="1"></circle>
                         <circle cx="20" cy="21" r="1"></circle>
                         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                     </svg>
-                    <span class="cart-badge">0</span>
+                    <!-- Essential ID attached to span for JS Updates -->
+                    <span class="cart-badge cart-count" id="cart-count">0</span>
                 </a>
             </li>
         </ul>
     </nav>
 
-    <!-- Homepage Body -->
     <div class="hero-section">
         <h1>Welcome to Dhaga piroi</h1>
         <p>Handmade with Love, Threaded with Passion</p>
         <a href="#featured" class="explore-btn">Explore Collection</a>
     </div>
 
-    <!-- Section for Featured Cards -->
+    <!-- Featured Products Grid Container populated via app.js -->
     <section id="featured" class="featured-items-section">
         <h2 class="section-title">Featured Products</h2>
         
@@ -657,7 +608,6 @@
         </div>
     </section>
 
-    <!-- Footer Section -->
     <footer class="footer">
         <div class="footer-container">
             <ul class="contact-info">
@@ -688,29 +638,21 @@
         </div>
     </footer>
 
-    <!-- Receipt Modal HTML Structure -->
-        <div id="receipt-modal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); width:90%; max-width:400px; background:white; padding:20px; border-radius:10px; box-shadow:0 0 20px rgba(0,0,0,0.3); z-index:10000;">
-            <h2 style="margin-bottom:15px;">Your Bill</h2>
-            <div id="receipt-items"></div>
-            <hr style="margin:10px 0;">
-            <p style="font-size:18px; font-weight:bold;">Total: <span id="total-amount"></span></p>
-            <div style="margin-top:20px; display:flex; gap:10px;">
-                <button onclick="document.getElementById('receipt-modal').style.display='none'" style="flex:1; padding:10px;">Close</button>
-                <button onclick="downloadPDF()" style="flex:1; padding:10px; background:#d45d79; color:white; border:none;">Download PDF</button>
-            </div>
+   -- Receipt Modal Container -->
+    <div id="receipt-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; padding:20px; overflow-y:auto;">
+        <div id="receipt-content" style="background:#fff; width:100%; max-width:400px; margin:50px auto; padding:20px; border-radius:10px;">
+            <h2 style="text-align:center; color:#d45d79;">Dhaga Piroi Receipt</h2>
+            <hr style="margin: 10px 0;">
+            <div id="receipt-items" style="margin-bottom: 15px;"></div>
+            <hr st <!yle="margin: 10px 0;">
+            <p style="font-size: 18px;"><strong>Total: <span id="total-amount"></span></strong></p>
+            
+            <button onclick="downloadPDF()" style="width:100%; padding:12px; background:#d45d79; color:#fff; border:none; margin-top:20px; cursor:pointer; border-radius:5px;">Download PDF</button>
+            <button onclick="document.getElementById('receipt-modal').style.display='none'" style="width:100%; padding:10px; margin-top:10px; cursor:pointer; background:#f0f0f0; border:none; border-radius:5px;">Close</button>
         </div>
+    </div>
 
-        <!-- Receipt Content for PDF -->
-        <div id="receipt-content" style="display:none;">
-            <h1>Dhaga Piroi Bill</h1>
-            <div id="receipt-items-pdf"></div>
-        </div>
-  
-    <!-- ============================================== -->
-    <!-- SCRIPTS SECTION (Keep all scripts at the end)  -->
-    <!-- ============================================== -->
-
-    <!-- 1. Scroll Restoration Logic -->
+    <!-- Scroll Restoration Script -->
     <script>
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
@@ -720,12 +662,14 @@
         };
     </script>
 
-    <!-- 2. Supabase Library -->
+    <!-- Required Libraries (Supabase and HTML2PDF) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-    <!-- 3. Your App Logic for rendering cards -->
+    <!-- External Logic Scripts -->
+    <!-- app.js handles the loading of featured products -->
     <script src="app.js"></script>
-
+    <!-- cart.js manages the shopping cart, modal sidebar, and receipt downloading -->
     <script src="cart.js"></script>
 
 </body>

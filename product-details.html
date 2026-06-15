@@ -18,6 +18,9 @@
             background-color: #fcf8f9;
             color: #333333;
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* ========================================= */
@@ -211,6 +214,7 @@
             margin: 60px auto;
             padding: 0 30px;
             min-height: 60vh;
+            flex-grow: 1;
         }
 
         .product-wrapper {
@@ -462,7 +466,7 @@
                 </ul>
             </li>
             <li>
-             <a href="#">Specials ▾</a>
+                <a href="#">Specials ▾</a>
                 <ul class="dropdown-menu">
                     <li>
                         <a href="#">Seasonal <span class="arrow">▶</span></a>
@@ -494,7 +498,8 @@
                         <circle cx="20" cy="21" r="1"></circle>
                         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                     </svg>
-                    <span class="cart-badge">0</span>
+                    <!-- ID attached for cart.js counter update -->
+                    <span class="cart-badge" id="cart-count">0</span>
                 </a>
             </li>
         </ul>
@@ -539,10 +544,25 @@
         </div>
     </footer>
 
-    <!-- Supabase Library -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Receipt Modal Container (Required for cart.js checkout functionality) -->
+    <div id="receipt-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; padding:20px; overflow-y:auto;">
+        <div id="receipt-content" style="background:#fff; width:100%; max-width:400px; margin:50px auto; padding:20px; border-radius:10px;">
+            <h2 style="text-align:center; color:#d45d79;">Dhaga Piroi Receipt</h2>
+            <hr style="margin: 10px 0;">
+            <div id="receipt-items" style="margin-bottom: 15px;"></div>
+            <hr style="margin: 10px 0;">
+            <p style="font-size: 18px;"><strong>Total: <span id="total-amount"></span></strong></p>
+            
+            <button onclick="downloadPDF()" style="width:100%; padding:12px; background:#d45d79; color:#fff; border:none; margin-top:20px; cursor:pointer; border-radius:5px;">Download PDF</button>
+            <button onclick="document.getElementById('receipt-modal').style.display='none'" style="width:100%; padding:10px; margin-top:10px; cursor:pointer; background:#f0f0f0; border:none; border-radius:5px;">Close</button>
+        </div>
+    </div>
 
-    <!-- Dynamic Fetch Script -->
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <!-- Dynamic Fetch Script for Product Details -->
     <script>
         const SUPABASE_URL = 'https://aybzziayodaybspnuxos.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable__YSi8eCD5W3QW1XN9uE08g_U8VHT3Ik';
@@ -552,7 +572,7 @@
             // 1. Parse the URL to find out which item to load and from which table
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('id');
-            const sourceTable = urlParams.get('source'); // Determines 'products' vs 'categories' table
+            const sourceTable = urlParams.get('source'); 
             
             const wrapper = document.getElementById('dynamic-product-wrapper');
 
@@ -576,7 +596,6 @@
                 if (error) throw error;
 
                 // 3. Determine category tag text
-                // Uses category_name from categories table, or falls back to 'Featured Item'
                 let categoryTagText = "Featured Item";
                 if (targetTable === 'categories' && product.category_name) {
                     categoryTagText = product.category_name;
@@ -588,7 +607,7 @@
                 // 4. Inject the Database information dynamically into the DOM
                 wrapper.innerHTML = `
                     <div class="product-image-block">
-                        <img src="${product.image_url}" alt="${product.name}" class="main-display-img">
+                        <img src="${product.image_url}" alt="${product.name}" class="main-display-img" onerror="this.onerror=null; this.src='https://placehold.co/600x600/eeeeee/999999?text=No+Image';">
                     </div>
 
                     <div class="product-info-block">
@@ -604,11 +623,16 @@
                         </div>
 
                         <div class="action-button-wrapper">
-                            <!-- New button -->
-                           <button class="add-to-cart-action-btn" onclick="addToCart({id: '${product.id}', name: '${product.name}', price: ${product.price}}, 'product-quantity')">
-                            <svg ...></svg>
-                             Add to Cart
-                           </button>
+                            <button class="add-to-cart-action-btn" onclick="event.preventDefault(); addToCart({
+                                id: ${product.id}, 
+                                name: '${product.name.replace(/'/g, "\\'")}', 
+                                price: ${product.price}, 
+                                image_url: '${product.image_url || ''}', 
+                                description: '${(product.description || '').replace(/'/g, "\\'")}'
+                            }, 'product-quantity')">
+                                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                                Add to Cart
+                            </button>
                         </div>
                     </div>
                 `;
@@ -619,10 +643,11 @@
             }
         }
 
-        // 5. Initialize fetch script immediately
+        // Initialize fetch script immediately
         fetchProductDetails();
     </script>
 
+    <!-- Connects to external cart logic -->
     <script src="cart.js"></script>
 </body>
 </html>
