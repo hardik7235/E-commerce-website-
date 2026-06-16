@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -608,35 +610,70 @@
         </div>
     </section>
 
-    <footer class="footer">
-        <div class="footer-container">
-            <ul class="contact-info">
-                <li>
-                    <a href="https://www.instagram.com/dhagapiroi/" target="_blank" title="Instagram">
-                        <svg class="contact-icon" viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/></svg>
-                    </a>
-                </li>
-                <li>
-                    <a href="tel:+919876543210" title="Call Us">
-                        <svg class="contact-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                    </a>
-                </li>
-                <li>
-                    <a href="mailto:info@dhagapiroi.com" title="Email Us">
-                        <svg class="contact-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://maps.google.com/?q=Ahmedabad,+Gujarat" target="_blank" title="Location">
-                        <svg class="contact-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                    </a>
-                </li>
+   <footer style="background-color: #1a1a1a; color: #fff; padding: 60px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin-top: auto;">
+    <style>
+        .footer-link { color: #cccccc; text-decoration: none; font-size: 15px; transition: color 0.3s ease; display: inline-block; padding: 4px 0; }
+        .footer-link:hover { color: #d45d79; }
+        .social-icon { width: 26px; height: 26px; fill: #cccccc; transition: transform 0.3s ease, fill 0.3s ease; }
+        .social-link:hover .social-icon { fill: #d45d79; transform: scale(1.1); }
+        
+        /* Flexbox for Left-Right alignment */
+        .footer-flex-container {
+            max-width: 1200px; 
+            margin: 0 auto; 
+            display: flex; 
+            justify-content: space-between; 
+            flex-wrap: wrap; 
+            gap: 40px;
+        }
+        
+        /* Mobile alignment */
+        @media (max-width: 768px) {
+            .footer-flex-container { flex-direction: column; align-items: center; text-align: center; }
+            .social-icons-list { justify-content: center; }
+        }
+    </style>
+
+    <div class="footer-flex-container">
+        
+        <!-- LEFT SIDE: Branding & 4 Logos -->
+        <div style="flex: 1; max-width: 400px;">
+            <h2 style="margin: 0 0 15px 0; font-size: 26px; color: #d45d79; font-family: 'Georgia', serif;">DHAGA PIROI</h2>
+            <p style="color: #999999; font-size: 14px; line-height: 1.6; margin-bottom: 25px;">
+                Empowering customers with unique handcrafted designs. Bringing tradition and quality together for a better experience.
+            </p>
+            
+            <ul class="social-icons-list" style="display: flex; gap: 20px; list-style: none; padding: 0; margin: 0;">
+                <!-- 1. Instagram -->
+                <li><a href="https://www.instagram.com/dhagapiroi/" target="_blank" class="social-link"><svg class="social-icon" viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/></svg></a></li>
+                <!-- 2. Call -->
+                <li><a href="tel:+919876543210" class="social-link"><svg class="social-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></a></li>
+                <!-- 3. Mail -->
+                <li><a href="mailto:info@dhagapiroi.com" class="social-link"><svg class="social-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a></li>
+                <!-- 4. Map / Location -->
+                <li><a href="https://maps.google.com/?q=Ahmedabad,+Gujarat" target="_blank" class="social-link"><svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></a></li>
             </ul>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Dhaga piroi. All rights reserved. | Designed for Quality.</p>
+
+        <!-- RIGHT SIDE: Navigation Links via IDs (No Full File Links) -->
+        <div style="min-width: 150px;">
+            <h4 style="margin-bottom: 20px; color: #d45d79; text-transform: uppercase; font-size: 16px; letter-spacing: 1px;">Quick Links</h4>
+         <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="margin-bottom: 12px;"><a href="index.html" class="footer-link">Home</a></li>
+            <li style="margin-bottom: 12px;"><a href="categories.html" class="footer-link">Categories</a></li>
+            <li style="margin-bottom: 12px;"><a href="categories.html?category=Specials" class="footer-link">Specials</a></li>
+            <li style="margin-bottom: 12px;"><a href="about.html" class="footer-link">About</a></li>
+        </ul>
         </div>
-    </footer>
+
+    </div>
+    
+    <!-- Footer Bottom -->
+    <div style="max-width: 1200px; margin: 40px auto 0; border-top: 1px solid #333; padding-top: 20px; text-align: center; color: #777; font-size: 13px;">
+        &copy; 2026 Dhaga Piroi. All rights reserved. | Designed for Quality.
+    </div>
+</footer>
+        
 
    -- Receipt Modal Container -->
     <div id="receipt-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; padding:20px; overflow-y:auto;">

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dhaga piroi - Login</title>
+    
+    <!-- Tailwind CSS Integration -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        /* Base Reset & Typography */
+        body { 
+            margin: 0;
+            padding: 0;
+            background-color: #000000; 
+            color: #ffffff; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Right Panel Container Styling */
+        .right-panel-bg {
+            background-color: #0a0a0a;
+            border-left: 1px solid #262626;
+        }
+
+        /* Form Input Fields */
+        .auth-input {
+            background-color: #121212; 
+            border: 1px solid #363636; 
+            border-radius: 6px;
+            padding: 14px 16px; 
+            font-size: 14px; 
+            color: #ffffff; 
+            width: 100%; 
+            outline: none;
+            transition: all 0.2s ease;
+            margin-bottom: 12px;
+        }
+        .auth-input::placeholder {
+            color: #737373;
+        }
+        .auth-input:focus { 
+            border-color: #555555; 
+        }
+
+        /* Primary Action Button (Solid) */
+        .btn-action-primary {
+            background-color: #0064e0;
+            color: #ffffff; 
+            font-weight: 600; 
+            padding: 14px 16px;
+            border-radius: 9999px; /* Full pill shape */
+            font-size: 14px; 
+            width: 100%; 
+            border: none; 
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background-color 0.2s ease;
+        }
+        .btn-action-primary:hover { 
+            background-color: #0057c2;
+        }
+
+        /* Secondary Action Button (Outline) */
+        .btn-action-secondary {
+            background-color: transparent; 
+            color: #0095f6; 
+            font-weight: 600; 
+            padding: 14px 16px;
+            border-radius: 9999px; /* Full pill shape */
+            border: 1px solid #363636;
+            font-size: 14px; 
+            width: 100%; 
+            cursor: pointer;
+            margin-top: 24px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-action-secondary:hover { 
+            border-color: #555555;
+            color: #ffffff;
+        }
+
+        /* Text Gradient Utility */
+        .text-gradient-custom {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Form Transition Layout */
+        .form-transition-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .form-view-section {
+            width: 100%;
+            position: absolute;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateX(20px);
+            pointer-events: none;
+            visibility: hidden;
+        }
+        .form-view-section.is-active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: all;
+            position: relative;
+            visibility: visible;
+        }
+
+        /* Keyframe Animations */
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slowZoomEffect {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        
+        /* Animation Utility Classes */
+        .animate-zoom-bg {
+            animation: slowZoomEffect 20s alternate infinite ease-in-out;
+        }
+        .animate-text-reveal-1 {
+            animation: slideUpFade 0.8s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+        .animate-text-reveal-2 {
+            animation: slideUpFade 0.8s ease-out 0.6s forwards;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row h-screen w-full bg-black overflow-hidden">
+
+    <!-- LEFT SIDE: Hero Section -->
+    <section id="hero-section" class="hidden md:block w-1/2 h-full relative overflow-hidden bg-black flex-shrink-0">
+        
+        <!-- Dark Overlay for Text Legibility -->
+        <div class="absolute inset-0 bg-black/60 z-10" aria-hidden="true"></div>
+        
+        <!-- Hero Text Content -->
+        <div class="absolute inset-0 z-20 flex flex-col justify-center items-center p-8 xl:p-12 text-center pointer-events-none">
+            <h1 class="text-[32px] lg:text-[38px] xl:text-[44px] font-semibold text-white leading-[1.2] tracking-tight">
+                <span class="animate-text-reveal-1 inline-block">Welcome to Dhaga piroi</span> <br />
+                <span class="text-gradient-custom font-bold mt-4 animate-text-reveal-2 inline-block text-[20px] lg:text-[24px] xl:text-[28px]">
+                    Handmade with Love, Threaded with Passion
+                </span>
+            </h1>
+        </div>
+
+        <!-- Animated Background Image -->
+        <img 
+            src="hero.jpeg" 
+            alt="Hero background showing moments" 
+            class="w-full h-full object-cover animate-zoom-bg"
+            onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop';"
+        />
+    </section>
+
+    <!-- RIGHT SIDE: Authentication Panel -->
+    <section id="auth-panel" class="w-full h-full md:w-1/2 right-panel-bg flex flex-col justify-center items-center p-6 sm:p-10">
+        
+        <div class="w-full max-w-[360px]">
+            
+            <div class="form-transition-wrapper">
+                
+                <!-- LOGIN FORM -->
+                <div id="login-form-view" class="form-view-section is-active">
+                    <h2 class="text-[20px] font-semibold text-white mb-6 text-center">Log in</h2>
+                    
+                    <form onsubmit="handleAuthSubmit(event, 'Login')" class="w-full" aria-label="Login Form">
+                        <input type="text" id="login-identifier" placeholder="Mobile number, username or email" class="auth-input" required aria-required="true">
+                        <input type="password" id="login-password" placeholder="Password" class="auth-input" required aria-required="true">
+                        
+                        <button type="submit" class="btn-action-primary mt-2">
+                            Log in
+                        </button>
+                    </form>
+
+                    <div class="flex items-center my-6 w-full">
+                        <div class="flex-grow h-px bg-[#363636]"></div>
+                        <span class="px-4 text-xs font-semibold text-[#737373] uppercase tracking-widest">or</span>
+                        <div class="flex-grow h-px bg-[#363636]"></div>
+                    </div>
+
+                    <button type="button" onclick="switchAuthView('signup')" class="btn-action-secondary">
+                        Sign Up
+                    </button>
+                </div>
+
+                <!-- SIGN UP FORM -->
+                <div id="signup-form-view" class="form-view-section">
+                    <h2 class="text-[20px] font-semibold text-white mb-6 text-center">Sign up</h2>
+                    
+                    <form onsubmit="handleAuthSubmit(event, 'Signup')" class="w-full" aria-label="Signup Form">
+                        <input type="text" id="signup-fullname" placeholder="Full Name" class="auth-input" required aria-required="true">
+                        <input type="text" id="signup-identifier" placeholder="Mobile number" class="auth-input" required aria-required="true">
+                        <input type="text" id="signup-username" placeholder="Username" class="auth-input" required aria-required="true">
+                        <input type="password" id="signup-password" placeholder="E-mail" class="auth-input" required aria-required="true">
+                        
+                        <button type="submit" class="btn-action-primary mt-2">
+                            Sign up
+                        </button>
+                    </form>
+
+                    <button type="button" onclick="switchAuthView('login')" class="btn-action-secondary mt-8">
+                        Already have an account? Log in
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Application Logic -->
+    <script>
+        /**
+         * Toggles the visibility between the login and signup forms.
+         * @param {string} targetView - The identifier for the view to display ('login' or 'signup').
+         */
+        function switchAuthView(targetView) {
+            const loginView = document.getElementById('login-form-view');
+            const signupView = document.getElementById('signup-form-view');
+
+            if (targetView === 'signup') {
+                loginView.classList.remove('is-active');
+                setTimeout(() => {
+                    signupView.classList.add('is-active');
+                }, 300); // Delay matches CSS transition duration
+            } else {
+                signupView.classList.remove('is-active');
+                setTimeout(() => {
+                    loginView.classList.add('is-active');
+                }, 300);
+            }
+        }
+
+        /**
+         * Handles form submission events.
+         * @param {Event} event - The form submission event.
+         * @param {string} actionType - Indicates whether it's a 'Login' or 'Signup' action.
+         */
+        function handleAuthSubmit(event, actionType) {
+            event.preventDefault(); // Prevent standard form submission
+            console.log(`${actionType} workflow initiated.`);
+            alert(`${actionType} action triggered. Implement backend integration here.`);
+        }
+    </script>
+
+</body>
+</html>
