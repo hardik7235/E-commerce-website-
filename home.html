@@ -1,11 +1,12 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Details - Dhaga piroi</title>
+    <title>Dhaga Piroi - Home</title>
     <style>
-        /* Base Reset */
         * {
             margin: 0;
             padding: 0;
@@ -15,17 +16,13 @@
         }
 
         body {
-            background-color: #fcf8f9;
-            color: #333333;
+            background-color: #f8f9fa;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
-        /* ========================================= */
-        /* PREMIUM ANIMATED NAVBAR                   */
-        /* ========================================= */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -37,6 +34,11 @@
             top: 0;
             z-index: 1200;
             animation: slideDownNav 0.6s ease-out forwards;
+        }
+
+        @keyframes slideDownNav {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .logo {
@@ -56,6 +58,11 @@
             width: 45px;
             object-fit: contain; 
             border-radius: 50%;
+            transition: transform 0.4s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.1) rotate(5deg);
         }
 
         .brand-name {
@@ -66,14 +73,16 @@
             letter-spacing: 0.5px;
         }
 
-        #nav-check { display: none; }
+        /* Checkbox hack for Mobile Menu (No JS) */
+        #nav-check {
+            display: none;
+        }
 
         .hamburger {
             display: none;
             cursor: pointer;
             flex-direction: column;
             gap: 5px;
-            z-index: 1300;
         }
 
         .hamburger span {
@@ -95,288 +104,351 @@
 
         .nav-links > li {
             position: relative;
-            margin-left: 20px;
+            margin-left: 25px;
         }
 
         .nav-links a {
             color: #333333;
             text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
+            font-size: 16px;
             display: block;
-            padding: 10px 12px;
+            padding: 10px;
+            transition: all 0.3s ease;
             position: relative;
-            transition: color 0.3s ease;
         }
 
         .nav-links > li > a::after {
             content: '';
             position: absolute;
-            width: 0;
-            height: 2px;
             bottom: 2px;
             left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
             background-color: #d45d79;
-            transition: all 0.3s ease;
+            transition: width 0.3s ease;
         }
 
-        .nav-links > li > a:hover::after { width: 80%; left: 10%; }
         .nav-links > li > a:hover { color: #d45d79; }
+        .nav-links > li > a:hover::after { width: 70%; }
 
+        /* First Level Dropdown Menus */
         .dropdown-menu {
-            display: none;
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.3s ease;
             position: absolute;
             top: 100%;
             left: 0;
             background-color: #ffffff;
-            min-width: 230px;
+            min-width: 220px;
             list-style: none;
-            box-shadow: 0px 8px 24px rgba(0,0,0,0.08);
-            border-radius: 6px;
-            padding: 5px 0;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            border-radius: 0 0 5px 5px;
+            z-index: 1000;
         }
 
-        .dropdown-menu li { position: relative; }
+        .dropdown-menu li { position: relative; border-bottom: 1px solid #eee; }
+        .dropdown-menu li:last-child { border-bottom: none; }
 
         .dropdown-menu a {
-            color: #444444;
+            color: #333333;
             padding: 12px 20px;
-            font-size: 14.5px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #f9f9f9;
         }
-
-        .dropdown-menu li:last-child a { border-bottom: none; }
 
         .dropdown-menu a:hover {
-            background-color: #fff5f7;
+            background-color: #fff0f3;
             color: #d45d79;
-            padding-left: 24px;
+            padding-left: 25px;
         }
 
+        /* Second Level Sub-Dropdowns */
         .sub-dropdown-menu {
-            display: none;
+            visibility: hidden;
+            opacity: 0;
+            transform: translateX(15px);
+            transition: all 0.3s ease;
             position: absolute;
             top: 0;
             left: 100%;
             background-color: #ffffff;
-            min-width: 210px;
+            min-width: 200px;
             list-style: none;
-            box-shadow: 0px 8px 24px rgba(0,0,0,0.08);
-            border-radius: 6px;
-            padding: 5px 0;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            border-radius: 0 5px 5px 5px;
         }
 
-        .nav-links li:hover > .dropdown-menu {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
+        .nav-links li:hover > .dropdown-menu { visibility: visible; opacity: 1; transform: translateY(0); }
+        .dropdown-menu li:hover > .sub-dropdown-menu { visibility: visible; opacity: 1; transform: translateX(0); }
+
+        .arrow { font-size: 12px; color: #888; }
+
+        .cart-icon {
+            display: flex;
+            align-items: center;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .cart-icon:hover { transform: translateY(-3px); }
+
+        .cart-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: #555555;
+            fill: none;
+            transition: stroke 0.3s ease;
         }
 
-        .dropdown-menu li:hover > .sub-dropdown-menu {
-            display: block;
-            animation: fadeInRight 0.3s ease forwards;
-        }
-
-        .arrow { font-size: 11px; color: #aaa; transition: transform 0.3s; }
-        .dropdown-menu li:hover > a .arrow { transform: translateX(3px); color: #d45d79; }
-
-        .cart-icon { display: flex; align-items: center; position: relative; }
-        .cart-icon svg { width: 23px; height: 23px; stroke: #444444; fill: none; transition: all 0.3s ease; }
-        .cart-icon:hover svg { stroke: #d45d79; transform: scale(1.1); }
+        .nav-links li:hover .cart-icon svg { stroke: #d45d79; }
 
         .cart-badge {
             position: absolute;
-            top: -5px;
-            right: -8px;
+            top: -8px;
+            right: -12px;
             background-color: #d45d79;
             color: #ffffff;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: bold;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* ========================================= */
-        /* PRODUCT DETAILS SECTION                   */
-        /* ========================================= */
-        .product-container {
-            max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 30px;
-            min-height: 60vh;
-            flex-grow: 1;
-        }
-
-        .product-wrapper {
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 60px;
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 24px;
-            box-shadow: 0 10px 40px rgba(212, 93, 121, 0.04);
-            border: 1px solid #f0e4e6;
-        }
-
-        .product-image-block {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #faf6f7;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid #f9eff1;
-        }
-
-        .main-display-img {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            object-fit: cover;
-            border-radius: 16px;
-            transition: transform 0.5s ease;
-        }
-
-        .product-image-block:hover .main-display-img { transform: scale(1.04); }
-
-        .product-info-block {
+        .hero-section {
+            text-align: center;
+            padding: 120px 20px;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('hero.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: calc(100vh - 75px);
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding-right: 20px;
-        }
-
-        .product-meta-tag {
-            align-self: flex-start;
-            background-color: #fff0f2;
-            color: #d45d79;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 6px 16px;
-            border-radius: 50px;
-            margin-bottom: 15px;
-        }
-
-        .main-product-title {
-            font-size: 38px;
-            font-family: 'Georgia', serif;
-            color: #222222;
-            line-height: 1.3;
-            margin-bottom: 12px;
-        }
-
-        .main-product-price {
-            font-size: 32px;
-            color: #d45d79;
-            font-weight: 700;
-            margin-bottom: 20px;
-            display: inline-block;
-        }
-
-        .product-description-text {
-            font-size: 15.5px;
-            color: #666666;
-            line-height: 1.7;
-            margin-bottom: 30px;
-            border-top: 1px dashed #f0e2e4;
-            padding-top: 20px;
-        }
-
-        .quantity-selector-section {
-            display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 35px;
+            position: relative;
+            z-index: 1;
         }
 
-        .quantity-label { font-size: 15px; font-weight: 600; color: #444444; }
+        .hero-section h1 {
+            color: #fdfdfd;
+            font-size: 56px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+            animation: fadeInUpLoad 1s ease-out forwards;
+        }
 
-        .quantity-input-field {
-            width: 75px;
-            height: 45px;
-            border: 2px solid #e8d5d8;
-            border-radius: 8px;
+        .hero-section p {
+            color: #fdfdfd;
+            font-size: 20px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+            margin-bottom: 30px;
+            animation: fadeInUpLoad 1s ease-out forwards;
+        }
+
+        .explore-btn {
+            display: inline-block;
+            padding: 12px 35px;
+            background-color: #d45d79;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            animation: fadeInUpLoad 1s ease-out forwards;
+        }
+
+        .explore-btn:hover {
+            background-color: #b84b63;
+            transform: translateY(-3px);
+        }
+
+        .featured-items-section { padding: 80px 50px; background-color: #ffffff; }
+
+        .section-title {
             text-align: center;
-            font-size: 16px;
+            font-size: 36px;
+            color: #333333;
+            margin-bottom: 50px;
+            font-family: 'Georgia', serif;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 3px;
+            background-color: #d45d79;
+            display: block;
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Responsive Grid Configuration */
+        /* Desktop Layout: 4 items per row */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Tablet Layout: 2 items per row */
+        @media (max-width: 1024px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+        }
+
+        /* Mobile Layout: 1 item per row */
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 0 15px;
+            }
+        }
+
+        .product-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid transparent;
+            animation: fadeInUpLoad 1s ease-out forwards;
+            position: relative;
+            z-index: 1;
+            text-decoration: none; 
+            color: inherit;        
+            cursor: pointer; 
+            overflow: hidden;
+            width: 100%;
+            max-width: 450px; /* Optional cap so single columns don't stretch too wide on iPads */
+            margin: 0 auto;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: #d45d79;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 0 15px rgba(212, 93, 121, 0.3);
+            z-index: 2;
+        }
+
+        .img-container { 
+            width: 100%; 
+            aspect-ratio: 4/5; 
+            overflow: hidden; 
+            margin-bottom: 20px; 
+            background-color: #fafafa; 
+            position: relative;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .img-container::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.15) 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .product-card:hover .img-container::after { opacity: 1; }
+
+        .product-img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); 
+        }
+        
+        .product-card:hover .product-img { transform: scale(1.08); }
+
+        .product-info { 
+            width: 100%; 
+            padding: 0 20px; 
+            text-align: center; 
+            display: flex; 
+            flex-direction: column; 
+            flex-grow: 1; 
+            background-color: #fff; 
+            z-index: 2; 
+            border-radius: 0 0 10px 10px; 
+        }
+
+        .product-title {
+            font-size: 17px;
             font-weight: 600;
             color: #222222;
-            outline: none;
-            background-color: #ffffff;
-            transition: all 0.3s ease;
+            margin-bottom: 8px;
+            font-family: 'Georgia', serif;
+            transition: color 0.3s ease;
         }
+        
+        .product-card:hover .product-title { color: #d45d79; }
 
-        .quantity-input-field:focus { border-color: #d45d79; box-shadow: 0 0 0 3px rgba(212, 93, 121, 0.15); }
-
-        .action-button-wrapper {
-            position: relative;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
+        .product-price { 
+            font-size: 19px; 
+            color: #d45d79; 
+            font-weight: bold; 
+            margin-bottom: 20px; 
+            transition: transform 0.3s ease;
         }
+        
+        .product-card:hover .product-price { transform: scale(1.1); }
 
-        .product-wrapper:hover .action-button-wrapper {
-            border-color: #d45d79;
-            box-shadow: 0 0 15px rgba(212, 93, 121, 0.2);
-            padding: 2px;
+        .add-to-cart-btn {
+            width: 100%; padding: 12px; background-color: #222222; color: #ffffff;
+            border: none; border-radius: 6px; font-size: 14px; font-weight: bold;
+            text-transform: uppercase; cursor: pointer; transition: all 0.3s ease;
+            display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: auto;
         }
+        
+        .add-to-cart-btn:hover { background-color: #d45d79; }
+        .add-to-cart-btn:active { transform: scale(0.95); }
+        .add-to-cart-btn svg { width: 18px; height: 18px; fill: currentColor; }
 
-        .add-to-cart-action-btn {
-            width: 100%;
-            padding: 16px 30px;
-            background-color: #222222;
-            color: #ffffff;
-            font-size: 15px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            transition: background-color 0.3s ease;
-        }
-
-        .add-to-cart-action-btn:hover { background-color: #d45d79; }
-        .add-to-cart-action-btn svg { width: 20px; height: 20px; fill: currentColor; }
-
-        /* ========================================= */
-        /* FOOTER STYLES                             */
-        /* ========================================= */
-        .footer { background-color: #1a1a1a; color: #f8f9fa; padding: 70px 0 20px; margin-top: 50px; }
+        .footer { background-color: #1a1a1a; color: #f8f9fa; padding: 70px 0 20px; margin-top: auto; }
         .footer-container { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; padding: 0 20px; margin-bottom: 40px; }
+        
         .contact-info { list-style: none; display: flex; justify-content: center; gap: 40px; margin: 0 auto; }
         .contact-info a { color: #cccccc; transition: all 0.3s ease; cursor: pointer; display: block; }
         .contact-info a:hover { color: #d45d79; transform: translateY(-5px); }
         .contact-icon { width: 32px; height: 32px; fill: currentColor; }
         .footer-bottom { text-align: center; padding-top: 25px; border-top: 1px solid #333333; color: #888888; font-size: 14px; }
 
-        @keyframes slideDownNav { from { transform: translateY(-100%); } to { transform: translateY(0); } }
-        @keyframes fadeInRight { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeInUpLoad {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        /* Responsive Design */
         @media (max-width: 1024px) {
-            .navbar { padding: 15px 25px; }
-            .product-wrapper { gap: 40px; padding: 30px; }
-            .main-product-title { font-size: 32px; }
+            .navbar { padding: 15px 20px; }
+            .nav-links > li { margin-left: 15px; }
+            .hero-section h1 { font-size: 42px; }
+            .featured-items-section { padding: 60px 20px; }
         }
 
         @media (max-width: 768px) {
-            .hamburger { display: flex; }
+            .hamburger { display: flex; } 
+            
             .nav-links {
                 position: absolute;
                 top: 100%;
@@ -385,38 +457,54 @@
                 background-color: #ffffff;
                 flex-direction: column;
                 align-items: flex-start;
-                box-shadow: 0px 10px 20px rgba(0,0,0,0.08);
+                box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
                 max-height: 0;
                 overflow: hidden;
-                transition: max-height 0.3s ease-in-out;
+                transition: max-height 0.3s ease;
             }
-            #nav-check:checked ~ .nav-links { max-height: 80vh; overflow-y: auto; }
-            .nav-links > li { width: 100%; margin: 0; border-bottom: 1px solid #f5f5f5; }
-            .nav-links a { padding: 15px 25px; width: 100%; }
+
+            #nav-check:checked ~ .nav-links {
+                max-height: 500px; 
+                overflow-y: auto;
+            }
+
+            .nav-links > li {
+                width: 100%;
+                margin: 0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .nav-links a { padding: 15px 20px; width: 100%; }
+            .nav-links > li > a::after { display: none; } 
+
             .dropdown-menu, .sub-dropdown-menu {
                 position: static;
                 width: 100%;
                 box-shadow: none;
-                background-color: #fdfafb;
+                background-color: #fafafa;
                 padding-left: 20px;
+                display: none; 
+                visibility: visible;
                 opacity: 1;
                 transform: none;
-                display: block;
             }
-            .arrow { display: none; }
-            .product-wrapper { grid-template-columns: 1fr; gap: 30px; padding: 20px; }
-            .product-info-block { padding-right: 0; }
-            .main-product-title { font-size: 28px; }
+
+            .dropdown-menu a:hover { padding-left: 20px; } 
+            .nav-links li:hover > .dropdown-menu { display: block; }
+            .dropdown-menu li:hover > .sub-dropdown-menu { display: block; }
+
+            .hero-section h1 { font-size: 32px; }
+            .hero-section p { font-size: 16px; }
+            .section-title { font-size: 28px; }
             .contact-info { gap: 25px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Unified Navigation Bar -->
     <nav class="navbar">
-        <div class="logo" onclick="window.location.href='index.html'">
-            <img src="logo.png" alt="Dhaga piroi Logo">
+        <div class="logo" onclick="window.location.href='home.html'">
+            <img src="logo.png" alt="Dhaga Piroi Logo">
             <span class="brand-name">Dhaga piroi</span>
         </div>
 
@@ -427,6 +515,7 @@
             <span></span>
         </label>
 
+        <!-- Top Right Navigation Menu -->
         <ul class="nav-links">
             <li><a href="home.html">Home</a></li>
             <li>
@@ -492,29 +581,36 @@
             </li>
             <li><a href="#">About</a></li>
             <li>
+                <!-- Cart Icon configured to integrate with cart.js logic -->
                 <a href="#" class="cart-icon" style="padding: 10px 20px;">
                     <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="9" cy="21" r="1"></circle>
                         <circle cx="20" cy="21" r="1"></circle>
                         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                     </svg>
-                    <!-- ID attached for cart.js counter update -->
-                    <span class="cart-badge" id="cart-count">0</span>
+                    <!-- Essential ID attached to span for JS Updates -->
+                    <span class="cart-badge cart-count" id="cart-count">0</span>
                 </a>
             </li>
         </ul>
     </nav>
 
-    <!-- Product Detail Container Section -->
-    <main class="product-container">
-        <!-- This wrapper is empty by default. JavaScript will fetch data and inject HTML here. -->
-        <div class="product-wrapper" id="dynamic-product-wrapper">
-            <h2 style="text-align: center; width: 100%; color: #888; grid-column: 1 / -1; padding: 40px 0;">Loading Product Details...</h2>
-        </div>
-    </main>
+    <div class="hero-section">
+        <h1>Welcome to Dhaga piroi</h1>
+        <p>Handmade with Love, Threaded with Passion</p>
+        <a href="#featured" class="explore-btn">Explore Collection</a>
+    </div>
 
-    <!-- Footer Section -->
-    <footer style="background-color: #1a1a1a; color: #fff; padding: 60px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin-top: auto;">
+    <!-- Featured Products Grid Container populated via app.js -->
+    <section id="featured" class="featured-items-section">
+        <h2 class="section-title">Featured Products</h2>
+        
+        <div id="product-container" class="product-grid">
+            <p style="grid-column: 1 / -1; text-align: center; font-size: 18px; color: #555;">Products are loading...</p>
+        </div>
+    </section>
+
+   <footer style="background-color: #1a1a1a; color: #fff; padding: 60px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin-top: auto;">
     <style>
         .footer-link { color: #cccccc; text-decoration: none; font-size: 15px; transition: color 0.3s ease; display: inline-block; padding: 4px 0; }
         .footer-link:hover { color: #d45d79; }
@@ -579,14 +675,13 @@
 </footer>
         
 
-
-    <!-- Receipt Modal Container (Required for cart.js checkout functionality) -->
+   -- Receipt Modal Container -->
     <div id="receipt-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; padding:20px; overflow-y:auto;">
         <div id="receipt-content" style="background:#fff; width:100%; max-width:400px; margin:50px auto; padding:20px; border-radius:10px;">
             <h2 style="text-align:center; color:#d45d79;">Dhaga Piroi Receipt</h2>
             <hr style="margin: 10px 0;">
             <div id="receipt-items" style="margin-bottom: 15px;"></div>
-            <hr style="margin: 10px 0;">
+            <hr st <!yle="margin: 10px 0;">
             <p style="font-size: 18px;"><strong>Total: <span id="total-amount"></span></strong></p>
             
             <button onclick="downloadPDF()" style="width:100%; padding:12px; background:#d45d79; color:#fff; border:none; margin-top:20px; cursor:pointer; border-radius:5px;">Download PDF</button>
@@ -594,96 +689,25 @@
         </div>
     </div>
 
-    <!-- External Libraries -->
+    <!-- Scroll Restoration Script -->
+    <script>
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.onload = function() {
+            window.scrollTo(0, 0);
+        };
+    </script>
+
+    <!-- Required Libraries (Supabase and HTML2PDF) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-    <!-- Dynamic Fetch Script for Product Details -->
-    <script>
-        const SUPABASE_URL = 'https://aybzziayodaybspnuxos.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable__YSi8eCD5W3QW1XN9uE08g_U8VHT3Ik';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        async function fetchProductDetails() {
-            // 1. Parse the URL to find out which item to load and from which table
-            const urlParams = new URLSearchParams(window.location.search);
-            const productId = urlParams.get('id');
-            const sourceTable = urlParams.get('source'); 
-            
-            const wrapper = document.getElementById('dynamic-product-wrapper');
-
-            // Prevent fetching if no ID is present in the URL
-            if (!productId) {
-                wrapper.innerHTML = "<h1 style='grid-column: 1/-1; text-align: center; color: #555;'>Product not found in URL!</h1>";
-                return;
-            }
-
-            // Fallback to 'products' table if the source is missing from the URL
-            const targetTable = sourceTable ? sourceTable : 'products';
-
-            try {
-                // 2. Fetch specific item based on table and ID
-                let { data: product, error } = await supabaseClient
-                    .from(targetTable)
-                    .select('*')
-                    .eq('id', productId)
-                    .single(); 
-
-                if (error) throw error;
-
-                // 3. Determine category tag text
-                let categoryTagText = "Featured Item";
-                if (targetTable === 'categories' && product.category_name) {
-                    categoryTagText = product.category_name;
-                }
-
-                // Update the browser tab title
-                document.title = `${product.name} - Dhaga piroi`;
-
-                // 4. Inject the Database information dynamically into the DOM
-                wrapper.innerHTML = `
-                    <div class="product-image-block">
-                        <img src="${product.image_url}" alt="${product.name}" class="main-display-img" onerror="this.onerror=null; this.src='https://placehold.co/600x600/eeeeee/999999?text=No+Image';">
-                    </div>
-
-                    <div class="product-info-block">
-                        <span class="product-meta-tag">${categoryTagText}</span>
-                        <h1 class="main-product-title">${product.name}</h1>
-                        <div class="main-product-price">₹ ${product.price}</div>
-                        
-                        <p class="product-description-text">${product.description || 'A beautiful handcrafted item carefully made with love and dedication.'}</p>
-
-                        <div class="quantity-selector-section">
-                            <span class="quantity-label">Quantity:</span>
-                            <input type="number" class="quantity-input-field" value="1" min="1" id="product-quantity">
-                        </div>
-
-                        <div class="action-button-wrapper">
-                            <button class="add-to-cart-action-btn" onclick="event.preventDefault(); addToCart({
-                                id: ${product.id}, 
-                                name: '${product.name.replace(/'/g, "\\'")}', 
-                                price: ${product.price}, 
-                                image_url: '${product.image_url || ''}', 
-                                description: '${(product.description || '').replace(/'/g, "\\'")}'
-                            }, 'product-quantity')">
-                                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                `;
-
-            } catch (err) {
-                console.error("System Error: ", err);
-                wrapper.innerHTML = `<h1 style='grid-column: 1/-1; text-align: center; color: #d45d79;'>Unable to load product. Please try again later.</h1>`;
-            }
-        }
-
-        // Initialize fetch script immediately
-        fetchProductDetails();
-    </script>
-
-    <!-- Connects to external cart logic -->
+    <!-- External Logic Scripts -->
+    <!-- app.js handles the loading of featured products -->
+    <script src="app.js"></script>
+    <!-- cart.js manages the shopping cart, modal sidebar, and receipt downloading -->
     <script src="cart.js"></script>
+
 </body>
 </html>
