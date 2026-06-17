@@ -310,7 +310,7 @@ function showReceipt() {
             <textarea id="checkout-address" placeholder="Full Delivery Address*" required style="width:100%; padding:14px; border:1px solid #ddd; border-radius:8px; outline:none; font-size:14px; margin-bottom:15px; resize:none;"></textarea>
 
             <div class="checkout-inputs-wrapper" style="display:flex; gap:10px; margin-bottom:15px;">
-                <input type="number" id="checkout-pincode" placeholder="Pincode*" required oninput="calculateDelivery()" style="flex:1.5; padding:14px; border:1px solid #ddd; border-radius:8px; outline:none;">
+                <input type="number" id="checkout-pincode" placeholder="Pincode*" required oninput="if(this.value.length > 6) this.value = this.value.slice(0,6); calculateDelivery()" style="flex:1.5; padding:14px; border:1px solid #ddd; border-radius:8px; outline:none;">
                 <button onclick="calculateDelivery(); showToastNotification('Delivery charge updated!')" style="flex:1; background: #e5e7eb; border: 1px solid #d1d5db; border-radius: 8px; cursor: pointer; font-weight: bold; color: #374151;">SEARCH</button>
             </div>
 
@@ -344,10 +344,23 @@ async function processPayment() {
     }
 
     try {
+        // User ki profile details (Name aur Phone Number) fetch karna
+        let custName = "Unknown";
+        let custPhone = "Unknown";
+        
+        const { data: profile } = await cartSupabaseClient.from('profiles').select('full_name, mobile').eq('id', currentUser.id).single();
+        if (profile) {
+            custName = profile.full_name || "Unknown";
+            custPhone = profile.mobile || "Unknown";
+        }
+
         const fullAddress = `${address} (Pincode: ${pincode}) | Paid via: ${paymentMethod.toUpperCase()}`;
 
+        // Order data array jisme Name aur Phone Number bhi attach hoga
         const orderData = cart.map(item => ({
             user_id: currentUser.id,
+            customer_name: custName,
+            customer_phone: custPhone,
             product_name: item.name || 'Unknown',
             image_url: item.image_url || '',
             description: item.description || '',
