@@ -64,7 +64,7 @@ async function validateUserSession() {
                 
                 // Redirect to login page ONLY if not already there
                 if (!window.location.href.includes('index.html')) {
-                    alert("Aapka session expire ho gaya hai. Security ke liye kripya dobara login karein.");
+                    alert("Your Sessio Is Expired Please Log-In Again For SecurityS.");
                     window.location.href = 'index.html'; 
                 }
             } else {
