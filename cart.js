@@ -537,7 +537,7 @@ async function initCart() {
     } else {
         cart = localCart;
         updateCartBadge();
-    }
+    }                                           
     
     document.querySelectorAll('.cart-icon').forEach(icon => {
         let newIcon = icon.cloneNode(true);

@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dhaga Piroi - Login & Signup</title>
+
+    <!--Favicon-->
+    <link rel="icon" href="logo.png">
     
     <!-- Supabase Integration -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script src="session-manager.js"></script>
     
     <style>
         * {
@@ -217,6 +222,9 @@
         .form-view.is-active { display: block; }
         @keyframes fadeInForm { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
 
+        /* Custom Spinner Animation */
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
         /* Message Box */
         #auth-message {
             margin-top: 20px;
@@ -303,7 +311,7 @@
         function switchAuthView(targetView) {
             const loginView = document.getElementById('login-form-view');
             const signupView = document.getElementById('signup-form-view');
-            document.getElementById('auth-message').textContent = '';
+            document.getElementById('auth-message').innerHTML = '';
 
             if (targetView === 'signup') {
                 loginView.classList.remove('is-active');
@@ -322,7 +330,17 @@
             event.preventDefault(); 
             
             const messageBox = document.getElementById('auth-message');
-            messageBox.textContent = 'Processing...';
+            
+            // Injecting the spinning SVG circle and text
+            messageBox.innerHTML = `
+                <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="animation: spin 1s linear infinite;">
+                        <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
+                        <path d="M12 2a10 10 0 0 1 10 10"></path>
+                    </svg>
+                    <span>Processing...</span>
+                </div>
+            `;
             messageBox.style.color = '#e0a800'; 
 
             if (actionType === 'Signup') {
@@ -364,15 +382,13 @@
                         throw new Error("Database Error: " + dbError.message);
                     }
 
-                    messageBox.textContent = 'Sign up successful! You can now log in.';
-                    messageBox.style.color = '#28a745'; 
-                    
                     event.target.reset();
 
+                    // No success text. Just keep the spinner running and switch view after 1.5 seconds.
                     setTimeout(() => {
-                        messageBox.textContent = '';
+                        messageBox.innerHTML = '';
                         switchAuthView('login');
-                    }, 2000);
+                    }, 1500);
 
                 } catch (error) {
                     messageBox.textContent = error.message;
@@ -406,9 +422,7 @@
 
                     if (error) throw new Error("Incorrect Password or Account not found.");
 
-                    messageBox.textContent = 'Login successful! Redirecting to Home...';
-                    messageBox.style.color = '#28a745'; 
-                    
+                    // No success text. Keep spinning and redirect to home.html after 1.5 seconds.
                     setTimeout(() => window.location.href = 'home.html', 1500);
 
                 } catch (error) {
