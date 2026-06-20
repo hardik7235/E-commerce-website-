@@ -281,7 +281,7 @@ function showReceipt() {
     window.isPaymentCompleted = false; 
     let subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-    // ✅ CHECKOUT IMAGES ADDED HERE
+    //  CHECKOUT IMAGES ADDED HERE
     const itemsHtml = cart.map(item => {
         const safeImage = item.image_url || 'https://placehold.co/100x100/eeeeee/999999?text=No+Image';
         return `
