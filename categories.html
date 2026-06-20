@@ -362,7 +362,8 @@
                     </li>
                 </ul>
             </li>
-            <li><a href="#">About</a></li>
+            <!-- CHANGED: Linked About to dynamic URL -->
+            <li><a href="categories.html?category=About">About</a></li>
             <li>
                 <a href="#" class="cart-icon" style="padding: 10px 20px;">
                     <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -443,7 +444,8 @@
             <li style="margin-bottom: 12px;"><a href="home.html" class="footer-link">Home</a></li>
             <li style="margin-bottom: 12px;"><a href="categories.html" class="footer-link">Categories</a></li>
             <li style="margin-bottom: 12px;"><a href="categories.html?category=Specials" class="footer-link">Specials</a></li>
-            <li style="margin-bottom: 12px;"><a href="about.html" class="footer-link">About</a></li>
+            <!-- CHANGED: Linked About to dynamic URL -->
+            <li style="margin-bottom: 12px;"><a href="categories.html?category=About" class="footer-link">About</a></li>
         </ul>
         </div>
 
@@ -527,6 +529,39 @@
             const urlParams = new URLSearchParams(window.location.search);
             const categoryName = urlParams.get('category');
 
+            // ==========================================
+            // SMART LOGIC: DYNAMIC ABOUT PAGE
+            // ==========================================
+            if (categoryName === 'About') {
+                titleElement.textContent = "About Us";
+                document.querySelector('.category-header p').textContent = '"Handmade with Love, Threaded with Passion."';
+                document.title = "About Us - Dhaga piroi";
+
+                // Remove grid layout properties to make it a standard block for text
+                container.classList.remove('product-grid');
+                container.style.display = 'block';
+                container.style.maxWidth = '900px';
+                container.style.margin = '0 auto';
+
+                // Inject Premium About Content directly into the container
+                container.innerHTML = `
+                    <div style="background: #ffffff; padding: 50px; border-radius: 16px; box-shadow: 0 10px 40px rgba(212, 93, 121, 0.08); text-align: center; border: 1px solid #f0e4e6;">
+                        <img src="logo.png" alt="Dhaga Piroi Logo" onerror="this.src='https://placehold.co/120x120/f8f9fa/c86b85?text=DP'" style="width: 120px; height: 120px; border-radius: 50%; margin-bottom: 25px; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                        
+                        <h2 style="color: #d45d79; font-family: 'Georgia', serif; font-size: 34px; margin-bottom: 25px;">Welcome to Dhaga Piroi</h2>
+                        
+                        <p style="margin-bottom: 25px; text-align: justify; line-height: 1.8; font-size: 16.5px; color: #555;">
+                            Welcome to <strong>Dhaga Piroi</strong>, where every thread weaves a story of tradition, passion, and artistry. Born from a deep love for handcrafted elegance, our brand is dedicated to bringing you unique, high-quality handmade accessories. From intricate crochet charms to beautifully woven hair clips and traditional jewelry, every single piece in our collection is meticulously crafted by skilled artisans. We believe that true beauty lies in the details, which is why we pour our hearts into creating products that not only look exquisite but also carry the warmth of a personal touch.
+                        </p>
+                        
+                        <p style="text-align: justify; line-height: 1.8; font-size: 16.5px; color: #555;">
+                            At Dhaga Piroi, our mission is to revive the charm of traditional craftsmanship while blending it seamlessly with modern aesthetics. We source the finest materials—vibrant threads, premium beads, and elegant pearls—to ensure that our accessories are as durable as they are beautiful. Whether you are looking for the perfect gift, a statement piece for a special occasion, or a delicate everyday charm, Dhaga Piroi promises a touch of handmade magic that celebrates your unique style. Thank you for supporting our journey and becoming a part of our woven family.
+                        </p>
+                    </div>
+                `;
+                return; // Stop execution here so it doesn't query the database for products
+            }
+
             try {
                 // Initialize the query to the 'categories' table
                 let query = supabaseClient.from('categories').select('*');
@@ -575,7 +610,6 @@
 
                 // Inject the Database information dynamically into the grid
                 products.forEach(product => {
-                    // Yahan updated button lagayein
                     const cardHTML = `
                         <a href="product-details.html?id=${product.id}&source=categories" class="product-card">
                             <div class="img-container">

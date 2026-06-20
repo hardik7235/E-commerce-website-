@@ -55,7 +55,7 @@ function showToastNotification(message) {
 }
 
 // ==========================================
-// 3. LOCAL-FIRST CART LOGIC (Solves empty cart issue)
+// 3. LOCAL-FIRST CART LOGIC
 // ==========================================
 function addToCart(product, quantityInputId = null) {
     const qty = quantityInputId ? parseInt(document.getElementById(quantityInputId).value) : 1;
@@ -220,7 +220,7 @@ function showCartModal() {
 }
 
 // ==========================================
-// 5. SMART CHECKOUT MODAL (Dynamic Buttons)
+// 5. SMART CHECKOUT MODAL (With Images)
 // ==========================================
 window.calculateDelivery = function() {
     const pincode = document.getElementById('checkout-pincode')?.value;
@@ -281,12 +281,21 @@ function showReceipt() {
     window.isPaymentCompleted = false; 
     let subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-    const itemsHtml = cart.map(item => `
-        <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px;">
-            <div>${item.name} <span style="color:#888;">(x${item.quantity})</span></div>
-            <div style="font-weight:bold;">₹${(item.price * item.quantity).toFixed(2)}</div>
-        </div>
-    `).join('');
+    // ✅ CHECKOUT IMAGES ADDED HERE
+    const itemsHtml = cart.map(item => {
+        const safeImage = item.image_url || 'https://placehold.co/100x100/eeeeee/999999?text=No+Image';
+        return `
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; font-size:14px; border-bottom:1px solid #eee; padding-bottom:10px;">
+            <div style="display:flex; align-items:center; flex-grow:1;">
+                <img src="${safeImage}" style="width:45px; height:45px; object-fit:cover; border-radius:6px; margin-right:12px; border:1px solid #ddd;">
+                <div>
+                    <div style="color:#333; font-weight:600;">${item.name}</div>
+                    <div style="color:#888; font-size:12px;">Qty: ${item.quantity}</div>
+                </div>
+            </div>
+            <div style="font-weight:bold; color:#222; font-size:15px;">₹${(item.price * item.quantity).toFixed(2)}</div>
+        </div>`;
+    }).join('');
 
     modal.innerHTML = `
     <div style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; padding:20px; overflow-y:auto;">
@@ -295,7 +304,9 @@ function showReceipt() {
             <h2 style="text-align:center; color:#d45d79; margin:0 0 15px 0; font-family:'Georgia', serif;">Checkout</h2>
             
             <input type="hidden" id="subtotal-val" value="${subtotal}">
-            <div style="background:#fcfcfc; border:1px solid #f0f0f0; border-radius:8px; padding:15px; margin-bottom:20px;">
+            
+            <!-- Products List with max-height to scroll if there are too many items -->
+            <div class="cart-items-scroll" style="background:#fcfcfc; border:1px solid #f0f0f0; border-radius:8px; padding:15px; margin-bottom:20px; max-height:220px; overflow-y:auto;">
                 ${itemsHtml}
             </div>
 
@@ -344,7 +355,6 @@ async function processPayment() {
     }
 
     try {
-        // User ki profile details (Name aur Phone Number) fetch karna
         let custName = "Unknown";
         let custPhone = "Unknown";
         
@@ -356,7 +366,6 @@ async function processPayment() {
 
         const fullAddress = `${address} (Pincode: ${pincode}) | Paid via: ${paymentMethod.toUpperCase()}`;
 
-        // Order data array jisme Name aur Phone Number bhi attach hoga
         const orderData = cart.map(item => ({
             user_id: currentUser.id,
             customer_name: custName,
@@ -512,7 +521,6 @@ async function handleCartLogout() {
 async function initCart() {
     injectResponsiveStyles();
 
-    // Preserve local cart items so they are not lost on page refresh
     let localCart = JSON.parse(localStorage.getItem('dhagaPiroiCart')) || [];
 
     const { data: { session } } = await cartSupabaseClient.auth.getSession();
@@ -522,9 +530,9 @@ async function initCart() {
             const { data } = await cartSupabaseClient.from('cart_items').select('*').eq('user_id', currentUser.id);
             
             if (data && data.length > 0) {
-                cart = data; // DB has priority
+                cart = data; 
             } else if (localCart.length > 0) {
-                cart = localCart; // Preserve un-synced items added before refresh
+                cart = localCart; 
                 await syncToDBInBackground(); 
             } else {
                 cart = [];
@@ -537,7 +545,7 @@ async function initCart() {
     } else {
         cart = localCart;
         updateCartBadge();
-    }                                           
+    }                                          
     
     document.querySelectorAll('.cart-icon').forEach(icon => {
         let newIcon = icon.cloneNode(true);
