@@ -1,0 +1,25 @@
+-- ===========================================================================
+-- 1. Create Profiles Table (Polished & Professional)
+-- ===========================================================================
+CREATE TABLE IF NOT EXISTS public.profiles (
+  -- 'id' directly references Supabase Auth users. 
+  -- 'ON DELETE CASCADE' means if a user is deleted from auth, their profile is auto-deleted.
+  id UUID REFERENCES auth.users(id) ON DELETE CASCADE PRIMARY KEY,
+  
+  full_name TEXT,
+  mobile TEXT,
+  
+  -- Username and Email should be UNIQUE so two people can't have the same.
+  username TEXT UNIQUE,
+  email TEXT UNIQUE,
+  
+  -- Automatically records the exact time the profile was created
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- ===========================================================================
+-- 2. Security Settings
+-- ===========================================================================
+-- Disabling RLS (Row Level Security) temporarily so that your HTML form 
+-- can insert data immediately upon signup without strict policy blocks.
+ALTER TABLE public.profiles DISABLE ROW LEVEL SECURITY;
