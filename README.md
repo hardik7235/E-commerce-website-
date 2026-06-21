@@ -158,6 +158,6 @@ Due to ES6 module imports and CORS policies, the project cannot be run by simply
 Execution:
 Open index.html on your localhost port to begin utilizing the platform.
 
-8. Developer Information
+8. Developer Information:
 Hardik
 Frontend Developer & Intern
